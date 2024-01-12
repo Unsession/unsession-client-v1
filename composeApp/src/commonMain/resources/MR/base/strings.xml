@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_title">Unsession</string>
+    <string name="anon_prompt">Make sure there is no personal information in the image that could reveal your identity</string>
+    <string name="password_too_easy">Password is too easy</string>
+    <string name="password_too_short">Password is too short (8 characters)</string>
+    <string name="passwords_not_match">Passwords do not match</string>
+    <string name="password_contains_email">Password contains email</string>
+    <string name="email_invalid">Invalid email</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="account_exists">Already have an account?</string>
+    <string name="password_recovery_warning">Attention! If you lose your password, it cannot be restored.</string>
+    <string name="email">Email</string>
+</resources>

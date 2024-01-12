@@ -1,0 +1,9 @@
+root = true
+
+[*.kt]
+end_of_line = lf
+ktlint_code_style = android_studio
+ktlint_standard_final-newline = enabled
+ktlint_standard = disabled # Disable all rules from the `standard` rule set provided by KtLint
+ktlint_experimental = enabled # Enable all `experimental` rules from all rule sets provided by KtLint or other rule providers
+ktlint_custom-rule-set = enabled # Enable all rules from the `custom-rule-set` rule set provided by KtLint

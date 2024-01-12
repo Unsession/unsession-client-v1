@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_title">Unsession</string>
+    <string name="anon_prompt">Убедитесь, что на изображении
+        нет ваших персональных данных, которые могут раскрыть вашу личность</string>
+    <string name="password_too_easy">Пароль слишком простой</string>
+    <string name="password_too_short">Пароль слишком короткий (8 симв)</string>
+    <string name="passwords_not_match">Пароли не совпадают</string>
+    <string name="password_contains_email">Пароль содержит email</string>
+    <string name="email_invalid">Неверный email</string>
+    <string name="login">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="account_exists">Уже есть аккаунт?</string>
+    <string name="password_recovery_warning">Внимание! В
+        случае утери пароля, его восстановление невозможно.</string>
+    <string name="email">Email</string>
+</resources>
