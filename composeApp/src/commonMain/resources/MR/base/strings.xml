@@ -12,4 +12,10 @@
     <string name="account_exists">Already have an account?</string>
     <string name="password_recovery_warning">Attention! If you lose your password, it cannot be restored.</string>
     <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login_error">Login error</string>
+    <string name="login_error_message">Incorrect email or password</string>
+    <string name="username">Username</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

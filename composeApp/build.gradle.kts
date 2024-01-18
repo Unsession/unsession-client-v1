@@ -8,19 +8,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
+    kotlin("plugin.serialization") version "1.9.22"
 }
 kotlin {
-//    @OptIn(ExperimentalWasmDsl::class)
-//    wasmJs {
-//        moduleName = "composeApp"
-//        browser {
-//            commonWebpackConfig {
-//                outputFileName = "composeApp.js"
-//            }
-//        }
-//        binaries.executable()
-//    }
-
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -28,20 +18,7 @@ kotlin {
             }
         }
     }
-
     jvm("desktop")
-
-//    listOf(
-//        iosX64(),
-//        iosArm64(),
-//        iosSimulatorArm64()
-//    ).forEach { iosTarget ->
-//        iosTarget.binaries.framework {
-//            baseName = "ComposeApp"
-//            isStatic = true
-//        }
-//    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -54,15 +31,21 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.uiTooling)
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.negotiation)
+            implementation(libs.ktor.client.serialization)
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenModel)
             implementation(libs.voyager.bottomSheetNavigator)
             implementation(libs.voyager.tabNavigator)
             implementation(libs.voyager.transitions)
             implementation(compose.preview)
+            //implementation(libs.compose.ui.tooling.preview)
 
             implementation(libs.moko.resources)
             implementation(libs.moko.resources.compose)
+
+            implementation(libs.settings)
+            implementation(libs.ktor.client.auth)
         }
 
         val desktopMain by getting {
@@ -73,13 +56,22 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
+            //implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.client.cio)
+
+            implementation(libs.moko.resources)
+            implementation(libs.moko.resources.compose)
         }
         desktopMain.dependencies {
+            //implementation(libs.compose.ui.tooling.preview)
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.client.cio)
+
+            implementation(libs.moko.resources)
+            implementation(libs.moko.resources.compose)
         }
     }
 }

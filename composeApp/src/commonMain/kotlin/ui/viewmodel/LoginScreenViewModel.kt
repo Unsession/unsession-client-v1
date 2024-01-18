@@ -9,9 +9,12 @@ enum class LogInState {
     LOG_IN,
     LOG_IN_SUCCESS,
     LOG_IN_ERROR,
+    LOG_IN_PROGRESS,
 }
 
 class LogInScreenViewModel : ScreenModel {
+    var username = mutableStateOf("")
+        private set
     var email = mutableStateOf("")
         private set
 
@@ -27,6 +30,9 @@ class LogInScreenViewModel : ScreenModel {
         private set
 
     var isPasswordValid = mutableStateOf(false)
+        private set
+
+    var isUsernameValid = mutableStateOf(false)
         private set
 
     var isFormValid = mutableStateOf(false)
@@ -52,32 +58,32 @@ class LogInScreenViewModel : ScreenModel {
     private fun checkPassword(): Boolean {
         when {
             password.value.length < 8 -> {
-                setError(Res.getString(MR.strings.password_too_short))
+                setError(Res.getString(MR.strings.password_too_short).toString())
                 isPasswordValid.value = false
             }
 
             password.value.contains(email.value.substringBefore("@")) -> {
-                setError(Res.getString(MR.strings.password_too_easy))
+                setError(Res.getString(MR.strings.password_too_easy).toString())
                 isPasswordValid.value = false
             }
 
             password.value.contains(email.value.substringAfter("@")) -> {
-                setError(Res.getString(MR.strings.password_too_easy))
+                setError(Res.getString(MR.strings.password_too_easy).toString())
                 isPasswordValid.value = false
             }
 
             password.value.contains("qwerty") -> {
-                setError(Res.getString(MR.strings.password_too_easy))
+                setError(Res.getString(MR.strings.password_too_easy).toString())
                 isPasswordValid.value = false
             }
 
             password.value.contains("12345678") -> {
-                setError(Res.getString(MR.strings.password_too_easy))
+                setError(Res.getString(MR.strings.password_too_easy).toString())
                 isPasswordValid.value = false
             }
 
             password.value.contains("password") -> {
-                setError(Res.getString(MR.strings.password_too_easy))
+                setError(Res.getString(MR.strings.password_too_easy).toString())
                 isPasswordValid.value = false
             }
 
@@ -89,6 +95,12 @@ class LogInScreenViewModel : ScreenModel {
     private fun checkForm(): Boolean {
         val state = isEmailValid.value && isPasswordValid.value
         isFormValid.value = state
+        return state
+    }
+
+    private fun checkUsername(): Boolean {
+        val state = username.value.length > 4
+        isUsernameValid.value = state
         return state
     }
 
@@ -108,12 +120,18 @@ class LogInScreenViewModel : ScreenModel {
     }
     fun setEmail(email: String) {
         this.email.value = email
-        checkEmail()
+        isEmailValid.value = true
+        //checkEmail()
         checkForm()
     }
     fun setPassword(password: String) {
         this.password.value = password
         checkPassword()
         checkForm()
+    }
+
+    fun setUsername(username: String) {
+        checkUsername()
+        this.username.value = username
     }
 }

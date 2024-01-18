@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.jetbrainsCompose) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     // id("org.jetbrains.kotlin.android") version "2.0.0-Beta2" apply false
+    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0" apply false
 }
