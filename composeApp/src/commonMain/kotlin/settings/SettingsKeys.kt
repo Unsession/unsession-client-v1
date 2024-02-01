@@ -1,6 +1,6 @@
 package settings
 
-import model.models.User
+import api.models.User
 import settings
 
 enum class SettingsKeys() {
@@ -30,9 +30,6 @@ object SettingsRepo {
     }
     fun storePassword(userPassword: String) {
         settings.putString(SettingsKeys.USER_PASSWORD.name, userPassword)
-    }
-    fun getToken(): String? {
-        return settings.getStringOrNull(SettingsKeys.JWT_TOKEN.name)
     }
     fun getUserId(): Int? {
         return settings.getIntOrNull(SettingsKeys.USER_ID.name)

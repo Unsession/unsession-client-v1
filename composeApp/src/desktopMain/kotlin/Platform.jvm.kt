@@ -9,7 +9,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
-import model.AuthPlugin
+import api.AuthPlugin
 import settings.SettingsRepo.getToken
 import java.util.concurrent.TimeUnit
 

@@ -1,5 +1,5 @@
-
 import android.os.Build
+import api.AuthPlugin
 import com.russhwolf.settings.Settings
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
@@ -13,7 +13,7 @@ import io.ktor.http.ContentType.Application
 import io.ktor.http.HttpHeaders.Authorization
 import io.ktor.http.HttpHeaders.ContentType
 import io.ktor.serialization.kotlinx.json.json
-import model.AuthPlugin
+import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 
 class AndroidPlatform : Platform {
@@ -25,20 +25,22 @@ actual fun getPlatform(): Platform = AndroidPlatform()
 actual fun apiHttpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(CIO) {
     config(this)
     install(ContentNegotiation) {
-        json()
+        json(Json {
+            ignoreUnknownKeys = true
+        })
     }
     engine {
-        requestTimeout = MASTER_TEST_TIMEOUT
+        requestTimeout = MASTER_TIMEOUT
         pipelining = true
     }
     install(HttpTimeout) {
-        requestTimeoutMillis = MASTER_TEST_TIMEOUT
-        connectTimeoutMillis = MASTER_TEST_TIMEOUT
-        socketTimeoutMillis = MASTER_TEST_TIMEOUT
+        requestTimeoutMillis = MASTER_TIMEOUT
+        connectTimeoutMillis = MASTER_TIMEOUT
+        socketTimeoutMillis = MASTER_TIMEOUT
     }
     defaultRequest {
         header("Content-Type", "application/json")
-        header(Authorization, "Bearer ${settings.getString("token", "")}")
+        header(Authorization, "Bearer ${getToken() ?: "none"}")
     }
     install(AuthPlugin)
 }
@@ -46,24 +48,29 @@ actual fun apiHttpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(CI
 actual fun rawHttpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(OkHttp) {
     config(this)
     install(ContentNegotiation) {
-        json()
+        json(Json {
+            ignoreUnknownKeys = true
+        })
     }
     engine {
         config {
             retryOnConnectionFailure(true)
-            callTimeout(MASTER_TEST_TIMEOUT, TimeUnit.SECONDS)
-            connectTimeout(MASTER_TEST_TIMEOUT, TimeUnit.SECONDS)
+            callTimeout(MASTER_TIMEOUT, TimeUnit.SECONDS)
+            connectTimeout(MASTER_TIMEOUT, TimeUnit.SECONDS)
         }
     }
     install(HttpTimeout) {
-        requestTimeoutMillis = MASTER_TEST_TIMEOUT
-        connectTimeoutMillis = MASTER_TEST_TIMEOUT
-        socketTimeoutMillis = MASTER_TEST_TIMEOUT
+        requestTimeoutMillis = MASTER_TIMEOUT
+        connectTimeoutMillis = MASTER_TIMEOUT
+        socketTimeoutMillis = MASTER_TIMEOUT
     }
     defaultRequest {
         header(ContentType, Application.Json)
-        header(Authorization, "Bearer ${settings.getString("token", "")}")
     }
 }
 
 actual val settings: Settings = Settings()
+
+actual fun getToken(): String? {
+    return settings.getStringOrNull("JWT_TOKEN")
+}

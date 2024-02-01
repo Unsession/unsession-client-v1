@@ -14,13 +14,16 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "11"
             }
         }
     }
-    jvm("desktop")
+    applyDefaultHierarchyTemplate()
+    //jvm("desktop")
     sourceSets {
         commonMain.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+//            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.ui)
@@ -46,10 +49,9 @@ kotlin {
 
             implementation(libs.settings)
             implementation(libs.ktor.client.auth)
-        }
 
-        val desktopMain by getting {
-            dependsOn(commonMain.get())
+            implementation("app.cash.paging:paging-compose-common:3.3.0-alpha02-0.4.0")
+            implementation("app.cash.paging:paging-common:3.3.0-alpha02-0.4.0")
         }
         val androidMain by getting {
             dependsOn(commonMain.get())
@@ -60,18 +62,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.ktor.client.cio)
-
-            implementation(libs.moko.resources)
-            implementation(libs.moko.resources.compose)
-        }
-        desktopMain.dependencies {
-            //implementation(libs.compose.ui.tooling.preview)
-            implementation(compose.desktop.currentOs)
-            implementation(libs.ktor.client.okhttp)
-            implementation(libs.ktor.client.cio)
-
-            implementation(libs.moko.resources)
-            implementation(libs.moko.resources.compose)
         }
     }
 }
@@ -90,6 +80,9 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
     packaging {
         resources {
@@ -99,18 +92,20 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
+        implementation(libs.androidx.core.splashscreen)
     }
 }
 dependencies {
-    implementation("androidx.core:core-ktx:+")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation(libs.androidx.ui.tooling.preview.android)
 }
 multiplatformResources {

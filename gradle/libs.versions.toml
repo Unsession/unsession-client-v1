@@ -8,11 +8,12 @@ androidx-appcompat = "1.6.1"
 androidx-constraintlayout = "2.1.4"
 androidx-core-ktx = "1.12.0"
 androidx-espresso-core = "3.5.1"
-androidx-material = "1.10.0"
+androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
 compose = "1.5.4"
-compose-compiler = "1.5.6"
+compose-compiler = "1.5.8"
 compose-plugin = "1.6.0-alpha01"
+coreSplashscreen = "1.1.0-alpha02"
 junit = "4.13.2"
 kotlin = "1.9.21"
 ktor = "2.3.7"
@@ -20,8 +21,12 @@ voyager = "1.0.0"
 uiToolingPreviewAndroid = "1.5.4"
 mokoRecources = "0.23.0"
 settings = "1.1.1"
+kotlin190 = "1.9.0"
+lifecycle-runtime-ktx = "2.7.0"
+compose-bom = "2023.10.01"
 
 [libraries]
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -58,11 +63,17 @@ androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "u
 moko-resources = { module = "dev.icerock.moko:resources", version.ref = "mokoRecources" }
 moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "mokoRecources" }
 settings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "settings" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+material3 = { group = "androidx.compose.material3", name = "material3" }
 
 
 [plugins]
-androidApplication = { id = "com.android.application", version = "8.2.1" }
-androidLibrary = { id = "com.android.library", version = "8.2.1" }
+androidApplication = { id = "com.android.application", version = "8.2.2" }
+androidLibrary = { id = "com.android.library", version = "8.2.2" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 recourcesMultiplatform = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoRecources" }
