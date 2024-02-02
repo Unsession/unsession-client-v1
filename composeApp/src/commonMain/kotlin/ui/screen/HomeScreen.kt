@@ -25,8 +25,8 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import ui.screen.tabs.FabTab
-import ui.screen.tabs.SearchTeachersTab
+import ui.FabTab
+import ui.screen.tabs.searchteachers.SearchTeachersTab
 
 object HomeScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)

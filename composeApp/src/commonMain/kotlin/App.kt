@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
-import ui.screen.LoginScreen
-import ui.screen.RegistrationScreen
-import ui.screen.SplashScreen
+import ui.screen.loginflow.LoginScreen
+import ui.screen.loginflow.RegistrationScreen
+import ui.SplashScreen
 
 val loginFlowScreens = listOf(
     LoginScreen, RegistrationScreen

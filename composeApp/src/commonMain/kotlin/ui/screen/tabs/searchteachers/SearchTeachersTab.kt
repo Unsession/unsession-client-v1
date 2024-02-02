@@ -1,4 +1,4 @@
-package ui.screen.tabs
+package ui.screen.tabs.searchteachers
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,6 +51,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import lol.unsession.db.models.Teacher
 import ui.ClickableCard
+import ui.FabTab
+import ui.screen.tabs.inner.FullReviewScreen
 
 class TeachersSearchPagingSource(val query: String) : PagingSource<Int, Teacher>() {
     override suspend fun load(params: LoadParams<Int>): PagingSourceLoadResult<Int, Teacher> {
@@ -118,6 +120,7 @@ class SearchTeachersTab(
 
     @Composable
     override fun Content() {
+        val nestedNav =
         val lazyReviewItems: LazyPagingItems<Teacher> = vm.pager.collectAsLazyPagingItems()
         val query by vm.query.collectAsState()
 
@@ -176,7 +179,8 @@ class SearchTeachersTab(
                         ) { index ->
                             val teacher = lazyReviewItems[index]
                             TeacherCard(teacher!!) {
-
+                                // navigate to FullReviewScreen
+                                localNav.push(FullReviewScreen(teacher))
                             }
                         }
                     }

@@ -1,11 +1,11 @@
-package ui.screen
+package ui.screen.loginflow
 
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import com.apu.unsession.MR
 import utils.state.LogInState
 
-object LogInScreenViewModel : ScreenModel {
+object RegistrationScreenViewModel : ScreenModel {
     var username = mutableStateOf("")
         private set
     var email = mutableStateOf("")
@@ -111,19 +111,19 @@ object LogInScreenViewModel : ScreenModel {
         return LogInState.entries[logInState.value]
     }
     fun setEmail(email: String) {
-        this.email.value = email
+        RegistrationScreenViewModel.email.value = email
         isEmailValid.value = true
         //checkEmail()
         checkForm()
     }
     fun setPassword(password: String) {
-        this.password.value = password
+        RegistrationScreenViewModel.password.value = password
         checkPassword()
         checkForm()
     }
 
     fun setUsername(username: String) {
         checkUsername()
-        this.username.value = username
+        RegistrationScreenViewModel.username.value = username
     }
 }

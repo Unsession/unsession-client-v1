@@ -1,4 +1,4 @@
-package ui.screen.tabs
+package ui
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.tab.Tab

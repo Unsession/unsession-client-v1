@@ -1,4 +1,4 @@
-package ui.screen
+package ui
 
 import androidx.compose.animation.core.EaseOutQuart
 import androidx.compose.animation.core.animateDpAsState
@@ -26,6 +26,9 @@ import dev.icerock.moko.resources.compose.painterResource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import settings.SettingsRepo
+import ui.screen.HomeScreen
+import ui.screen.loginflow.LoginScreen
+import ui.screen.loginflow.RegistrationScreen
 
 object SplashScreen : Screen {
     @Composable
