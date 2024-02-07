@@ -1,53 +1,60 @@
-package ui.screen.tabs.inner
+package ui.screen.tabs.searchteachers
 
-import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingSource
 import api.Api
-import api.models.Review
 import app.cash.paging.LoadStateError
 import app.cash.paging.LoadStateLoading
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
+import app.cash.paging.PagingSource
 import app.cash.paging.PagingSourceLoadResult
 import app.cash.paging.PagingSourceLoadResultError
 import app.cash.paging.PagingSourceLoadResultPage
 import app.cash.paging.PagingState
 import app.cash.paging.cachedIn
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.apu.unsession.MR
-import dev.icerock.moko.resources.format
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import lol.unsession.db.models.PAGE_SIZE_DEFAULT
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flatMapLatest
 import lol.unsession.db.models.Teacher
-import ui.ReviewCard
+import ui.HomeAppBar
+import ui.TeacherCard
+import ui.screen.tabs.inner.FullReviewScreen
 import utils.OptScreen
 import utils.ScreenOptions
 
-class FullReviewPagingSource(private val teacherId: Int) : PagingSource<Int, Review>() {
-    override suspend fun load(params: LoadParams<Int>): PagingSourceLoadResult<Int, Review> {
+class TeachersSearchPagingSource(private val query: String) : PagingSource<Int, Teacher>() {
+    override suspend fun load(params: LoadParams<Int>): PagingSourceLoadResult<Int, Teacher> {
         val page = params.key ?: 1
         val pageSize = params.loadSize
         var error = ""
-        val response = Api.Reviews.getByTeacher(page, teacherId, pageSize, onFailure = {
-            error = it
-        })
+        val response = if (query.length >= 3) {
+            Api.Teachers.searchTeachers(page, query, pageSize, onFailure = {
+                error = it
+            })
+        } else {
+            Api.Teachers.getTeachers(page, pageSize, onFailure = {
+                error = it
+            })
+        }
         if (error.isNotEmpty()) {
             println(error)
             return PagingSourceLoadResultError(IllegalArgumentException(error))
@@ -59,7 +66,7 @@ class FullReviewPagingSource(private val teacherId: Int) : PagingSource<Int, Rev
         )
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Review>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Teacher>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(20)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(20)
@@ -67,43 +74,43 @@ class FullReviewPagingSource(private val teacherId: Int) : PagingSource<Int, Rev
     }
 }
 
-class FullReviewScreenViewModel(id: Int = -1) : ViewModel() {
-    val pager = Pager(PagingConfig(pageSize = PAGE_SIZE_DEFAULT)) {
-        FullReviewPagingSource(id)
-    }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+class SearchTeachersScreenViewModel : ViewModel() {
+    var query = MutableStateFlow("")
+
+    val pager =
+        query.debounce(300).flatMapLatest { uQuery ->
+            Pager(PagingConfig(pageSize = 15)) {
+                TeachersSearchPagingSource(uQuery)
+            }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
+        }
+
 }
 
-
-class FullReviewScreen(
-    private val teacher: Teacher
+class SearchTeachersScreen(
+    private
+    val vm: SearchTeachersScreenViewModel = SearchTeachersScreenViewModel()
 ) : OptScreen {
-    private val vm = FullReviewScreenViewModel(teacher.id)
+
     override val screenOptions: ScreenOptions
         @Composable get() = ScreenOptions(
-            title = MR.strings.reviews_on.format(teacher.name).stringRes.getString(LocalContext.current)
+            title = MR.strings.reviews.getString(LocalContext.current)
         )
 
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     override fun Content() {
-        Scaffold(
-            floatingActionButton = {
-                ExtendedFloatingActionButton(
-                    onClick = {
+        val nav = LocalNavigator.current!!
+        val lazyReviewItems: LazyPagingItems<Teacher> =
+            vm.pager.collectAsLazyPagingItems()
 
-                    },
-                    text = { Text("Add review") },
-                    icon = { Icon(imageVector = (Icons.Default.Add), "add review") }
-                )
-            }
-        ) {
-            Column {
-                val lazyReviewItems = vm.pager.collectAsLazyPagingItems()
-                Text(teacher.id.toString())
-                Text(teacher.name)
-                Text(teacher.department)
-                teacher.email?.let { Text(it) }
-                Spacer(modifier = Modifier.height(16.dp))
+        Column {
+            HomeAppBar(
+                title = screenOptions.title,
+                onSearchTextChanged = {
+                    vm.query.value = it
+                }
+            )
+            Box(Modifier.padding(horizontal = 8.dp)) {
                 when (lazyReviewItems.loadState.refresh) {
                     is LoadStateLoading -> {
                         Spacer(Modifier.size(40.dp))
@@ -118,11 +125,9 @@ class FullReviewScreen(
                             items(
                                 lazyReviewItems.itemCount
                             ) { index ->
-                                val review = lazyReviewItems[index]
-                                if (review != null) {
-                                    ReviewCard(review)
-                                } else {
-                                    Text("Error review null [$index]")
+                                val teacher = lazyReviewItems[index]
+                                TeacherCard(teacher!!) {
+                                    nav.push(FullReviewScreen(teacher))
                                 }
                             }
                         }

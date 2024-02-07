@@ -1,6 +1,7 @@
 package api
 
 import api.models.LoginResponse
+import api.models.Review
 import api.models.User
 import apiHttpClient
 import io.ktor.client.call.body
@@ -35,7 +36,7 @@ sealed class Api {
             pageSize: Int = PAGE_SIZE_DEFAULT,
             onSuccess: suspend (List<Teacher>) -> Unit = {},
             onFailure: (String) -> Unit = {}
-        ): List<Teacher>? {
+        ): List<Teacher> {
             try {
                 val call = apiClient.get {
                     url("$endpoint/get")
@@ -44,7 +45,7 @@ sealed class Api {
                 }
                 if (!call.status.isSuccess()) {
                     onFailure(call.bodyAsText())
-                    return null
+                    return listOf()
                 }
                 val result: List<Teacher> = call.body()
                 logger.debug("Got teachers: $result")
@@ -53,7 +54,7 @@ sealed class Api {
             } catch (e: Exception) {
                 onFailure(e.message.toString())
             }
-            return null
+            return listOf()
         }
 
         @OptIn(InternalAPI::class)
@@ -90,6 +91,33 @@ sealed class Api {
     data object Reviews : Api() {
         override val endpoint: String
             get() = "$apiUrl/reviews"
+
+        suspend fun getByTeacher(
+            page: Int,
+            teacherId: Int,
+            pageSize: Int = PAGE_SIZE_DEFAULT,
+            onSuccess: suspend (List<Review>) -> Unit = {},
+            onFailure: (String) -> Unit = {}
+        ): List<Review> {
+            try {
+                val call = apiClient.get {
+                    url("$endpoint/getByTeacher")
+                    parameter("page", page)
+                    parameter("pageSize", pageSize)
+                    parameter("teacherId", teacherId)
+                }
+                if (!call.status.isSuccess()) {
+                    onFailure(call.bodyAsText())
+                    return listOf()
+                }
+                val result = call.body<List<Review>>()
+                onSuccess(result)
+                return result
+            } catch (e: Exception) {
+                onFailure(e.message.toString())
+            }
+            return listOf()
+        }
     }
 
     data object Users : Api() {

@@ -19,6 +19,6 @@ data class Review (
     val individuality: Int?,
     val humour: Int?,
 
-    val createdTimestamp: Int,
+    val createdTimestamp: Long,
     val comment: String?,
 )

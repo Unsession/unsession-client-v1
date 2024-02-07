@@ -94,7 +94,7 @@ object LoginScreen : Screen {
                     CoroutineScope(Dispatchers.IO).launch {
                         login(loginData,
                             onSuccess = {
-                                nav.push(HomeScreen)
+                                nav.push(HomeScreen())
                             }, onFailure = {
                                 LogInScreenViewModel.loginErrorMessage.value = it
                                 LogInScreenViewModel.setLogInState(LogInState.LOG_IN_FAILED)

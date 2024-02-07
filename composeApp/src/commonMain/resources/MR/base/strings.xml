@@ -18,4 +18,29 @@
     <string name="username">Username</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+
+    <string name="norating">No rating</string>
+    <string name="reviews">Reviews</string>
+    <string name="rating">Rating</string>
+    <string name="rating_count">Number of ratings</string>
+
+    <string name="global_rating">Global rating</string>
+    <string name="labs_rating">Labs</string>
+    <string name="hw_rating">Homework</string>
+    <string name="exam_rating">Exam</string>
+    <string name="kindness_rating">Kindness</string>
+    <string name="responsibility_rating">Responsibility</string>
+    <string name="individual_rating">Individual approach</string>
+    <string name="humour_rating">Humor</string>
+
+    <string name="rating_error">Error fetching rating</string>
+    <string name="reviewed_by">Reviewed by</string>
+    <string name="reviewed">Reviewed</string>
+    <string name="review">Review</string>
+    <string name="review_error">Error submitting review: %s</string>
+    <string name="teacher">Teacher</string>
+    <string name="subject">Subject</string>
+    <string name="search">Search</string>
+    <string name="reviews_on">Reviews on %s</string>
+
 </resources>

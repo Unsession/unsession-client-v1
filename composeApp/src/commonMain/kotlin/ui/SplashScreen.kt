@@ -43,10 +43,11 @@ object SplashScreen : Screen {
                 runBlocking {
                     Api.Users.login(SettingsRepo.cachedLoginData()!!,
                         onSuccess = {
-                            nav.push(HomeScreen)
+                            nav.push(HomeScreen())
                         }, onFailure = {
                             nav.push(LoginScreen)
-                        })
+                        }
+                    )
                 }
             } else {
                 nav.push(RegistrationScreen)

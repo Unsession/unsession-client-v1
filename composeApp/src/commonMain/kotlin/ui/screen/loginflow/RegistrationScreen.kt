@@ -102,7 +102,7 @@ object RegistrationScreen : Screen {
                     CoroutineScope(Dispatchers.IO).launch {
                         register(loginData,
                             onSuccess = {
-                                nav.push(HomeScreen)
+                                nav.push(HomeScreen())
                             }, onFailure = {
                                 RegistrationScreenViewModel.loginErrorMessage.value = it
                                 RegistrationScreenViewModel.setLogInState(LogInState.LOG_IN_FAILED)

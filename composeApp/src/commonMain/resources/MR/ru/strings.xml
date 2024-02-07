@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="app_title">Unsession</string>
-    <string name="anon_prompt">Убедитесь, что на изображении
-        нет ваших персональных данных, которые могут раскрыть вашу личность</string>
+    <string name="anon_prompt">Убедитесь, что на изображении нет ваших персональных данных, которые могут раскрыть вашу личность</string>
     <string name="password_too_easy">Пароль слишком простой</string>
     <string name="password_too_short">Пароль слишком короткий (8 симв)</string>
     <string name="passwords_not_match">Пароли не совпадают</string>
@@ -11,8 +10,7 @@
     <string name="login">Войти</string>
     <string name="register">Зарегистрироваться</string>
     <string name="account_exists">Уже есть аккаунт?</string>
-    <string name="password_recovery_warning">Внимание! В
-        случае утери пароля, его восстановление невозможно.</string>
+    <string name="password_recovery_warning">Внимание! В случае утери пароля, его восстановление невозможно.</string>
     <string name="email">Электропочта</string>
     <string name="password">Пароль</string>
     <string name="login_error">Ошибка входа</string>
@@ -20,4 +18,29 @@
     <string name="username">Имя пользователя</string>
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
+
+    <string name="norating">Нет рейтинга</string>
+    <string name="reviews">Отзывы</string>
+    <string name="rating">Рейтинг</string>
+    <string name="rating_count">Количество оценок</string>
+
+    <string name="global_rating">Глобальный рейтинг</string>
+    <string name="labs_rating">Лабы</string>
+    <string name="hw_rating">ДЗ</string>
+    <string name="exam_rating">Экзамен</string>
+    <string name="kindness_rating">Доброта</string>
+    <string name="responsibility_rating">Ответственность</string>
+    <string name="individual_rating">Индивидуальный подход</string>
+    <string name="humour_rating">Юмор</string>
+
+    <string name="rating_error">Ошибка получения рейтинга</string>
+    <string name="reviewed_by">Оценил</string>
+    <string name="reviewed">Оценено</string>
+    <string name="review">Оценить</string>
+    <string name="review_error">Ошибка отправки отзыва: %s</string>
+    <string name="teacher">Преподаватель</string>
+    <string name="subject">Предмет</string>
+    <string name="search">Поиск</string>
+    <string name="reviews_on">Отзывы на %s</string>
+
 </resources>
