@@ -15,7 +15,7 @@ import io.ktor.client.statement.request
 import io.ktor.http.isSuccess
 import io.ktor.util.InternalAPI
 import lol.unsession.db.models.PAGE_SIZE_DEFAULT
-import lol.unsession.db.models.Teacher
+import api.models.Teacher
 import org.slf4j.LoggerFactory.getLogger
 import rawHttpClient
 

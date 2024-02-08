@@ -42,5 +42,6 @@
     <string name="subject">Subject</string>
     <string name="search">Search</string>
     <string name="reviews_on">Reviews on %s</string>
+    <string name="review_on">New review on %s</string>
 
 </resources>

@@ -31,9 +31,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import api.models.Review
+import api.models.Teacher
 import cafe.adriel.voyager.navigator.tab.Tab
 import com.apu.unsession.MR
-import lol.unsession.db.models.Teacher
 import utils.OptScreen
 import utils.toDateText
 import kotlin.math.floor
@@ -96,20 +96,15 @@ fun ClickableReviewCard(review: Review, onClick: () -> Unit = {}) {
             Spacer(Modifier.size(8.dp))
 
             Review("Общая оценка: ", review.globalRating)
-
-            review.labsRating?.let { Review("Лабы: ", it) }
-            review.hwRating?.let { Review("ДЗ: ", it) }
-            review.examRating?.let { Review("Экзамен: ", it) }
-
-            review.responsibility?.let { Review("Ответственность: ", it) }
-            review.individuality?.let { Review("Индивидуальный подход: ", it) }
-            review.kindness?.let { Review("Доброта: ", it) }
-            review.humour?.let { Review("Юмор: ", it) }
+            review.difficultyRating?.let { Review("Сложность: ", it) }
+            review.boredomRating?.let { Review("Душность: ", it) }
+            review.toxicityRating?.let { Review("Токсичность: ", it) }
+            review.educationalValueRating?.let { Review("Полезность: ", it) }
+            review.personalQualitiesRating?.let { Review("Личные качества: ", it) }
         }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReviewCard(review: Review, onClick: () -> Unit = {}) {
     @Composable
@@ -132,15 +127,11 @@ fun ReviewCard(review: Review, onClick: () -> Unit = {}) {
             Spacer(Modifier.size(8.dp))
 
             Review("Общая оценка: ", review.globalRating)
-
-            review.labsRating?.let { Review("Лабы: ", it) }
-            review.hwRating?.let { Review("ДЗ: ", it) }
-            review.examRating?.let { Review("Экзамен: ", it) }
-
-            review.responsibility?.let { Review("Ответственность: ", it) }
-            review.individuality?.let { Review("Индивидуальный подход: ", it) }
-            review.kindness?.let { Review("Доброта: ", it) }
-            review.humour?.let { Review("Юмор: ", it) }
+            review.difficultyRating?.let { Review("Сложность: ", it) }
+            review.boredomRating?.let { Review("Душность: ", it) }
+            review.toxicityRating?.let { Review("Токсичность: ", it) }
+            review.educationalValueRating?.let { Review("Полезность: ", it) }
+            review.personalQualitiesRating?.let { Review("Личные качества: ", it) }
         }
     )
 }

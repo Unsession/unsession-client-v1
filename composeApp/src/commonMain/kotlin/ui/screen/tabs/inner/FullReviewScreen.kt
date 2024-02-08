@@ -4,14 +4,19 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,14 +35,15 @@ import app.cash.paging.PagingSourceLoadResultPage
 import app.cash.paging.PagingState
 import app.cash.paging.cachedIn
 import app.cash.paging.compose.collectAsLazyPagingItems
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.apu.unsession.MR
 import dev.icerock.moko.resources.format
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import lol.unsession.db.models.PAGE_SIZE_DEFAULT
-import lol.unsession.db.models.Teacher
+import api.models.Teacher
 import ui.ReviewCard
-import utils.OptScreen
+import utils.AppBarScreen
 import utils.ScreenOptions
 
 class FullReviewPagingSource(private val teacherId: Int) : PagingSource<Int, Review>() {
@@ -73,31 +79,48 @@ class FullReviewScreenViewModel(id: Int = -1) : ViewModel() {
     }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
 }
 
-
 class FullReviewScreen(
     private val teacher: Teacher
-) : OptScreen {
+) : AppBarScreen {
     private val vm = FullReviewScreenViewModel(teacher.id)
     override val screenOptions: ScreenOptions
         @Composable get() = ScreenOptions(
-            title = MR.strings.reviews_on.format(teacher.name).stringRes.getString(LocalContext.current)
+            title = MR.strings.reviews_on.format(teacher.name).toString(LocalContext.current)
         )
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    override val AppBar: @Composable () -> Unit
+        @Composable get() = {
+            val nav = LocalNavigator.current!!
+            TopAppBar(
+                title = {
+                    Text(screenOptions.title)
+                },
+                navigationIcon = {
+                     IconButton(onClick = { nav.pop() }, content = {
+                         Icon(Icons.Default.ArrowBack, contentDescription = null)
+                     })
+                }
+            )
+        }
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     override fun Content() {
+        val nav = LocalNavigator.current!!
         Scaffold(
             floatingActionButton = {
                 ExtendedFloatingActionButton(
                     onClick = {
-
+                        nav.push(AddReviewScreen(teacher))
                     },
-                    text = { Text("Add review") },
+                    text = { Text(MR.strings.review.getString(LocalContext.current)) },
                     icon = { Icon(imageVector = (Icons.Default.Add), "add review") }
                 )
-            }
+            },
+            topBar = AppBar
         ) {
-            Column {
+            Column(Modifier.padding(it)) {
                 val lazyReviewItems = vm.pager.collectAsLazyPagingItems()
                 Text(teacher.id.toString())
                 Text(teacher.name)

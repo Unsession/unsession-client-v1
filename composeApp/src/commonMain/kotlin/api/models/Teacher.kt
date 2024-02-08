@@ -1,4 +1,4 @@
-package lol.unsession.db.models
+package api.models
 
 import kotlinx.serialization.Serializable
 

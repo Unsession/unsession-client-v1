@@ -42,5 +42,6 @@
     <string name="subject">Предмет</string>
     <string name="search">Поиск</string>
     <string name="reviews_on">Отзывы на %s</string>
+    <string name="review_on">Новый отзыв на %s</string>
 
 </resources>

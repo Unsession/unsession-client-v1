@@ -1,23 +1,24 @@
 package ui.screen.tabs.searchteachers
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.FadeTransition
 import com.apu.unsession.MR
-import ui.AppTab
 import ui.OptTab
+import ui.screen.tabs.inner.SearchTeachersScreen
+import utils.AppBarScreen
 import utils.ScreenOptions
 
 
-class SearchTeachersTab : OptTab, AppTab {
-    override var appBarVisibility: MutableState<Boolean> = mutableStateOf(true)
+class SearchTeachersTab : OptTab {
     override val screenOptions: ScreenOptions
         @Composable get() = ScreenOptions(
             title = MR.strings.reviews.getString(LocalContext.current)
@@ -32,8 +33,12 @@ class SearchTeachersTab : OptTab, AppTab {
 
     @Composable
     override fun Content() {
-        Navigator(SearchTeachersScreen()) {
-            FadeTransition(it)
+        val currentScreen = remember { mutableStateOf<AppBarScreen?>(null) }
+        Box {
+            Navigator(SearchTeachersScreen(), onBackPressed = { true }) {
+                currentScreen.value = (it.lastItem as? AppBarScreen)
+                FadeTransition(it)
+            }
         }
     }
 }

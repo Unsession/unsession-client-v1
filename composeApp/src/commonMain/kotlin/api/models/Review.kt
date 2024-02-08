@@ -1,7 +1,6 @@
 package api.models
 
 import kotlinx.serialization.Serializable
-import lol.unsession.db.models.Teacher
 
 @Serializable
 data class Review (
@@ -10,14 +9,11 @@ data class Review (
     val teacher: Teacher,
 
     val globalRating: Int,
-    val labsRating: Int?,
-    val hwRating: Int?,
-    val examRating: Int?,
-
-    val kindness: Int?,
-    val responsibility: Int?,
-    val individuality: Int?,
-    val humour: Int?,
+    val difficultyRating: Int?,
+    val boredomRating: Int?,
+    val toxicityRating: Int?,
+    val educationalValueRating: Int?,
+    val personalQualitiesRating: Int?,
 
     val createdTimestamp: Long,
     val comment: String?,

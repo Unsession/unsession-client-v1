@@ -1,6 +1,5 @@
-package ui.screen.tabs.searchteachers
+package ui.screen.tabs.inner
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -34,10 +33,9 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
-import lol.unsession.db.models.Teacher
+import api.models.Teacher
 import ui.HomeAppBar
 import ui.TeacherCard
-import ui.screen.tabs.inner.FullReviewScreen
 import utils.OptScreen
 import utils.ScreenOptions
 
@@ -78,18 +76,16 @@ class TeachersSearchPagingSource(private val query: String) : PagingSource<Int, 
 class SearchTeachersScreenViewModel : ViewModel() {
     var query = MutableStateFlow("")
 
-    val pager =
-        query.debounce(300).flatMapLatest { uQuery ->
-            Pager(PagingConfig(pageSize = 15)) {
-                TeachersSearchPagingSource(uQuery)
-            }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
-        }
+    val pager = query.debounce(300).flatMapLatest { uQuery ->
+        Pager(PagingConfig(pageSize = 15)) {
+            TeachersSearchPagingSource(uQuery)
+        }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
+    }
 
 }
 
 class SearchTeachersScreen(
-    private
-    val vm: SearchTeachersScreenViewModel = SearchTeachersScreenViewModel()
+    private val vm: SearchTeachersScreenViewModel = SearchTeachersScreenViewModel()
 ) : OptScreen {
 
     override val screenOptions: ScreenOptions
@@ -100,35 +96,29 @@ class SearchTeachersScreen(
     @Composable
     override fun Content() {
         val nav = LocalNavigator.current!!
-        val lazyReviewItems: LazyPagingItems<Teacher> =
-            vm.pager.collectAsLazyPagingItems()
+        val lazyReviewItems: LazyPagingItems<Teacher> = vm.pager.collectAsLazyPagingItems()
 
         Column {
-            HomeAppBar(
-                title = screenOptions.title,
-                onSearchTextChanged = {
-                    vm.query.value = it
+            HomeAppBar(title = screenOptions.title, onSearchTextChanged = {
+                vm.query.value = it
+            })
+            when (lazyReviewItems.loadState.refresh) {
+                is LoadStateLoading -> {
+                    Spacer(Modifier.size(40.dp))
                 }
-            )
-            Box(Modifier.padding(horizontal = 8.dp)) {
-                when (lazyReviewItems.loadState.refresh) {
-                    is LoadStateLoading -> {
-                        Spacer(Modifier.size(40.dp))
-                    }
 
-                    is LoadStateError -> {
-                        Text("Error")
-                    }
+                is LoadStateError -> {
+                    Text("Error")
+                }
 
-                    else -> {
-                        LazyColumn(Modifier) {
-                            items(
-                                lazyReviewItems.itemCount
-                            ) { index ->
-                                val teacher = lazyReviewItems[index]
-                                TeacherCard(teacher!!) {
-                                    nav.push(FullReviewScreen(teacher))
-                                }
+                else -> {
+                    LazyColumn(Modifier.padding(horizontal = 8.dp)) {
+                        items(
+                            lazyReviewItems.itemCount
+                        ) { index ->
+                            val teacher = lazyReviewItems[index]
+                            TeacherCard(teacher!!) {
+                                nav.push(FullReviewScreen(teacher))
                             }
                         }
                     }
