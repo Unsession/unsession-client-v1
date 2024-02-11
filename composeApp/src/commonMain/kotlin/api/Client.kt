@@ -2,6 +2,8 @@ package api
 
 import api.models.LoginResponse
 import api.models.Review
+import api.models.ReviewDto
+import api.models.TeacherDto
 import api.models.User
 import apiHttpClient
 import io.ktor.client.call.body
@@ -15,7 +17,6 @@ import io.ktor.client.statement.request
 import io.ktor.http.isSuccess
 import io.ktor.util.InternalAPI
 import lol.unsession.db.models.PAGE_SIZE_DEFAULT
-import api.models.Teacher
 import org.slf4j.LoggerFactory.getLogger
 import rawHttpClient
 
@@ -34,12 +35,12 @@ sealed class Api {
         suspend fun getTeachers(
             page: Int,
             pageSize: Int = PAGE_SIZE_DEFAULT,
-            onSuccess: suspend (List<Teacher>) -> Unit = {},
+            onSuccess: suspend (List<TeacherDto>) -> Unit = {},
             onFailure: (String) -> Unit = {}
-        ): List<Teacher> {
+        ): List<TeacherDto> {
             try {
-                val call = apiClient.get {
-                    url("$endpoint/get")
+                val call = api.apiClient.get {
+                    url("${Api.Teachers.endpoint}/get")
                     parameter("page", page)
                     parameter("pageSize", pageSize)
                 }
@@ -47,7 +48,7 @@ sealed class Api {
                     onFailure(call.bodyAsText())
                     return listOf()
                 }
-                val result: List<Teacher> = call.body()
+                val result: List<TeacherDto> = call.body()
                 logger.debug("Got teachers: $result")
                 onSuccess(result)
                 return result
@@ -62,23 +63,23 @@ sealed class Api {
             page: Int,
             prompt: String,
             pageSize: Int = PAGE_SIZE_DEFAULT,
-            onSuccess: suspend (List<Teacher>) -> Unit = {},
+            onSuccess: suspend (List<TeacherDto>) -> Unit = {},
             onFailure: (String) -> Unit = {}
-        ): List<Teacher> {
+        ): List<TeacherDto> {
             try {
-                val call = apiClient.get {
-                    url("$endpoint/search")
+                val call = api.apiClient.get {
+                    url("${Api.Teachers.endpoint}/search")
                     parameter("page", page)
                     parameter("pageSize", pageSize)
                     parameter("prompt", prompt)
                 }
                 println("Got teachers: ${call.content}")
-                println("$endpoint/search: ${call.request.headers.entries()}; ${call.status}")
+                println("${Api.Teachers.endpoint}/search: ${call.request.headers.entries()}; ${call.status}")
                 if (!call.status.isSuccess()) {
                     onFailure(call.bodyAsText())
                     return listOf()
                 }
-                val result: List<Teacher> = call.body()
+                val result: List<TeacherDto> = call.body()
                 onSuccess(result)
                 return result
             } catch (e: Exception) {
@@ -100,7 +101,7 @@ sealed class Api {
             onFailure: (String) -> Unit = {}
         ): List<Review> {
             try {
-                val call = apiClient.get {
+                val call = api.apiClient.get {
                     url("$endpoint/getByTeacher")
                     parameter("page", page)
                     parameter("pageSize", pageSize)
@@ -118,6 +119,29 @@ sealed class Api {
             }
             return listOf()
         }
+
+        suspend fun create(
+            review: ReviewDto,
+            onFailure: (String) -> Unit = {},
+            onSuccess: suspend () -> Unit
+        ) {
+            try {
+                println("Creating review: $review.")
+                println("Creating review: ${review.userId}")
+                val call = apiClient.post {
+                    url("$endpoint/create")
+                    setBody(review)
+                }
+                println(call.bodyAsText())
+                if (!call.status.isSuccess()) {
+                    onFailure(call.bodyAsText())
+                    return
+                }
+                onSuccess()
+            } catch (e: Exception) {
+                onFailure(e.message.toString())
+            }
+        }
     }
 
     data object Users : Api() {
@@ -129,7 +153,6 @@ sealed class Api {
             onSuccess: suspend () -> Unit,
             onFailure: (String) -> Unit = {}
         ) {
-            loginData.save()
             try {
                 val call = rawClient.post {
                     url("$endpoint/login")

@@ -52,6 +52,8 @@ kotlin {
 
             implementation("app.cash.paging:paging-compose-common:3.3.0-alpha02-0.4.0")
             implementation("app.cash.paging:paging-common:3.3.0-alpha02-0.4.0")
+            implementation("com.github.jeziellago:compose-markdown:0.4.1")
+
         }
         val androidMain by getting {
             dependsOn(commonMain.get())

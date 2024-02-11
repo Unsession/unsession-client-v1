@@ -41,7 +41,8 @@ object SplashScreen : Screen {
             }
             if (SettingsRepo.cachedLoginData() != null) {
                 runBlocking {
-                    Api.Users.login(SettingsRepo.cachedLoginData()!!,
+                    Api.Users.login(
+                        SettingsRepo.cachedLoginData()!!,
                         onSuccess = {
                             nav.push(HomeScreen())
                         }, onFailure = {

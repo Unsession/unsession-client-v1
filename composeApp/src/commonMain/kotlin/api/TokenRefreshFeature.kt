@@ -31,7 +31,7 @@ class AuthPlugin {
                             headers[HttpHeaders.Authorization] = "Bearer ${getToken()}"
                         }
                         println(repeatCall.headers.entries())
-                        val response = rawClient.request(repeatCall)
+                        val response = api.rawClient.request(repeatCall)
                         proceedWith(response)
                     }, {
                         println("Login failed, proceeding with error 401")

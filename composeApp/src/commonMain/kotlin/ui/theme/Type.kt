@@ -1,11 +1,10 @@
-package com.example.rally.ui.theme
+package ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.apu.unsession.R
 
@@ -21,69 +20,80 @@ private val Ubuntu = FontFamily(
 )
 
 val Typography = Typography(
-    defaultFontFamily = Ubuntu,
-    h1 = TextStyle(
+    displayLarge = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 96.sp,
     ),
-    h2 = TextStyle(
+    displayMedium = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 60.sp,
         letterSpacing = 1.5.sp
     ),
-    h3 = TextStyle(
+    displaySmall = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 44.sp,
         fontFamily = InterFontFamily
     ),
-    h4 = TextStyle(
+    headlineLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 34.sp
     ),
-    h5 = TextStyle(
+    headlineMedium = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
-        letterSpacing = 0.2.em
+        letterSpacing = 0.2.sp
     ),
-    h6 = TextStyle(
+    headlineSmall = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         letterSpacing = 1.sp
     ),
-    subtitle1 = TextStyle(
+    titleLarge = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         letterSpacing = 1.sp
     ),
-    subtitle2 = TextStyle(
+    titleMedium = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 0.1.em
     ),
-    body1 = TextStyle(
+    titleSmall = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+    ),
+    bodyLarge = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,
-        letterSpacing = 0.1.em,
+        fontSize = 16.sp,
+        letterSpacing = 0.1.sp
+    ),
+    bodyMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        letterSpacing = 0.1.sp,
         fontFamily = InterFontFamily
     ),
-    body2 = TextStyle(
+    bodySmall = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 14.sp,
         lineHeight = 16.sp,
-        letterSpacing = 0.1.em
+        letterSpacing = 0.1.sp
     ),
-    button = TextStyle(
+    labelLarge = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 16.sp,
-        letterSpacing = 0.2.em
+        letterSpacing = 0.2.sp
     ),
-    caption = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+    labelMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.2.sp
     ),
-    overline = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 10.sp
+    labelSmall = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.2.sp
     )
 )

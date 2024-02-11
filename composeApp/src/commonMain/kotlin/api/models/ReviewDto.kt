@@ -3,10 +3,10 @@ package api.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Review (
+data class ReviewDto(
     val id: Int? = null,
-    val user: User? = null,
-    val teacher: TeacherDto,
+    val userId: Int,
+    val teacherId: Int,
 
     val globalRating: Int,
     val difficultyRating: Int? = null,
@@ -15,6 +15,6 @@ data class Review (
     val educationalValueRating: Int? = null,
     val personalQualitiesRating: Int? = null,
 
-    val createdTimestamp: Int? = null,
+    val createdTimestamp: Int,
     val comment: String? = null,
 )

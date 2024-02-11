@@ -1,6 +1,7 @@
 package settings
 
 import api.models.User
+import lol.unsession.security.permissions.Access
 import settings
 
 enum class SettingsKeys() {
@@ -9,7 +10,11 @@ enum class SettingsKeys() {
     USER_NAME,
     USER_EMAIL,
     USER_PASSWORD,
-    USER_ROLE;
+    USER_ROLE,
+    PERMISSIONS,
+    CREATED,
+    BANNED_UNTIL,
+    BANNED_REASON;
 }
 
 object SettingsRepo {
@@ -31,6 +36,19 @@ object SettingsRepo {
     fun storePassword(userPassword: String) {
         settings.putString(SettingsKeys.USER_PASSWORD.name, userPassword)
     }
+    fun storePermissionsArray(permissions: Array<Access>) {
+        val string = arrayToString(permissions.map { it.name }.toTypedArray())
+        settings.putString(SettingsKeys.PERMISSIONS.name, string)
+    }
+    fun storeCreated(created: Int) {
+        settings.putInt(SettingsKeys.CREATED.name, created)
+    }
+    fun storeBannedUntil(bannedUntil: Int) {
+        settings.putInt(SettingsKeys.BANNED_UNTIL.name, bannedUntil)
+    }
+    fun storeBannedReason(bannedReason: String) {
+        settings.putString(SettingsKeys.BANNED_REASON.name, bannedReason)
+    }
     fun getUserId(): Int? {
         return settings.getIntOrNull(SettingsKeys.USER_ID.name)
     }
@@ -46,21 +64,36 @@ object SettingsRepo {
     fun getPassword(): String? {
         return settings.getStringOrNull(SettingsKeys.USER_PASSWORD.name)
     }
+    fun getPermissionsArray(): Array<Access> {
+        val string = settings.getStringOrNull(SettingsKeys.PERMISSIONS.name) ?: return emptyArray()
+        return constructArrayFromString(string).map { Access.valueOf(it) }.toTypedArray()
+    }
+    fun getCreated(): Int? {
+        return settings.getIntOrNull(SettingsKeys.CREATED.name)
+    }
+    fun getBannedUntil(): Int? {
+        return settings.getIntOrNull(SettingsKeys.BANNED_UNTIL.name)
+    }
+    fun getBannedReason(): String? {
+        return settings.getStringOrNull(SettingsKeys.BANNED_REASON.name)
+    }
     fun settingsReset() {
         settings.clear()
-    }
-    fun storeCache(user: User) {
-        storeUserId(user.id)
-        storeEmail(user.userLoginData!!.email)
-        storeRole(user.roleName)
-        storeUsername(user.name)
     }
 
     fun cachedLoginData(): User.UserLoginData? {
         return User.UserLoginData(
-            getUsername()?: return null,
-            getEmail()?: return null,
-            getPassword()?: return null
+            getUsername() ?: return null,
+            getEmail() ?: return null,
+            getPassword() ?: return null
         )
     }
+}
+
+fun arrayToString(array: Array<String>): String {
+    return array.joinToString(",")
+}
+
+fun constructArrayFromString(string: String): Array<String> {
+    return string.split(",").toTypedArray()
 }

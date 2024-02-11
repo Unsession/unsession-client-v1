@@ -74,3 +74,5 @@ actual val settings: Settings = Settings()
 actual fun getToken(): String? {
     return settings.getStringOrNull("JWT_TOKEN")
 }
+
+actual typealias JavaSerializable = java.io.Serializable

@@ -25,13 +25,11 @@
     <string name="rating_count">Количество оценок</string>
 
     <string name="global_rating">Глобальный рейтинг</string>
-    <string name="labs_rating">Лабы</string>
-    <string name="hw_rating">ДЗ</string>
-    <string name="exam_rating">Экзамен</string>
-    <string name="kindness_rating">Доброта</string>
-    <string name="responsibility_rating">Ответственность</string>
-    <string name="individual_rating">Индивидуальный подход</string>
-    <string name="humour_rating">Юмор</string>
+    <string name="difficult_rating">Сложность</string>
+    <string name="boredom_rating">Душность</string>
+    <string name="toxicity_rating">Токсичность</string>
+    <string name="educational_value_rating">Полученные знания</string>
+    <string name="personal_rating">Личные качества</string>
 
     <string name="rating_error">Ошибка получения рейтинга</string>
     <string name="reviewed_by">Оценил</string>
@@ -42,6 +40,16 @@
     <string name="subject">Предмет</string>
     <string name="search">Поиск</string>
     <string name="reviews_on">Отзывы на %s</string>
-    <string name="review_on">Новый отзыв на %s</string>
+    <string name="review_on">Новый отзыв</string>
+
+    <string name="comment">Комментарий</string>
+    <string name="send_review">Создать комментарий</string>
+
+    <string name="admin">Администратор</string>
+    <string name="superuser">👑 Суперпользователь 👑</string>
+    <string name="control_panel">Панель управления</string>
+
+    <string name="teacher_email_greetings">Здравствуйте, %s!\n</string>
+    <string name="default_not_enough_permissions">Действие запрещено</string>
 
 </resources>

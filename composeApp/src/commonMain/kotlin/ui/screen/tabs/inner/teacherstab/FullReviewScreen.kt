@@ -1,4 +1,4 @@
-package ui.screen.tabs.inner
+package ui.screen.tabs.inner.teacherstab
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -15,6 +15,7 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -22,13 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingSource
-import api.Api
 import api.models.Review
+import api.models.TeacherDto
 import app.cash.paging.LoadStateError
 import app.cash.paging.LoadStateLoading
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
+import app.cash.paging.PagingSource
 import app.cash.paging.PagingSourceLoadResult
 import app.cash.paging.PagingSourceLoadResultError
 import app.cash.paging.PagingSourceLoadResultPage
@@ -41,8 +42,9 @@ import dev.icerock.moko.resources.format
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import lol.unsession.db.models.PAGE_SIZE_DEFAULT
-import api.models.Teacher
-import ui.ReviewCard
+import ui.theme.appBarElevation
+import ui.uikit.ReviewCard
+import ui.uikit.TeacherInfoList
 import utils.AppBarScreen
 import utils.ScreenOptions
 
@@ -51,7 +53,7 @@ class FullReviewPagingSource(private val teacherId: Int) : PagingSource<Int, Rev
         val page = params.key ?: 1
         val pageSize = params.loadSize
         var error = ""
-        val response = Api.Reviews.getByTeacher(page, teacherId, pageSize, onFailure = {
+        val response = api.Api.Reviews.getByTeacher(page, teacherId, pageSize, onFailure = {
             error = it
         })
         if (error.isNotEmpty()) {
@@ -80,7 +82,7 @@ class FullReviewScreenViewModel(id: Int = -1) : ViewModel() {
 }
 
 class FullReviewScreen(
-    private val teacher: Teacher
+    private val teacher: TeacherDto
 ) : AppBarScreen {
     private val vm = FullReviewScreenViewModel(teacher.id)
     override val screenOptions: ScreenOptions
@@ -97,9 +99,9 @@ class FullReviewScreen(
                     Text(screenOptions.title)
                 },
                 navigationIcon = {
-                     IconButton(onClick = { nav.pop() }, content = {
-                         Icon(Icons.Default.ArrowBack, contentDescription = null)
-                     })
+                    IconButton(onClick = { nav.pop() }, content = {
+                        Icon(Icons.Default.ArrowBack, contentDescription = null)
+                    })
                 }
             )
         }
@@ -118,29 +120,33 @@ class FullReviewScreen(
                     icon = { Icon(imageVector = (Icons.Default.Add), "add review") }
                 )
             },
-            topBar = AppBar
+            topBar = {
+                Surface(shadowElevation = appBarElevation) {
+                    AppBar()
+                }
+            }
         ) {
-            Column(Modifier.padding(it)) {
+            Column(Modifier.padding(top = 50.dp).padding(horizontal = 8.dp)) {
                 val lazyReviewItems = vm.pager.collectAsLazyPagingItems()
-                Text(teacher.id.toString())
-                Text(teacher.name)
-                Text(teacher.department)
-                teacher.email?.let { Text(it) }
                 Spacer(modifier = Modifier.height(16.dp))
-                when (lazyReviewItems.loadState.refresh) {
-                    is LoadStateLoading -> {
-                        Spacer(Modifier.size(40.dp))
-                    }
 
-                    is LoadStateError -> {
-                        Text("Error")
+                LazyColumn(Modifier) {
+                    item {
+                        TeacherInfoList(teacher)
                     }
+                    items(
+                        lazyReviewItems.itemCount
+                    ) { index ->
+                        when (lazyReviewItems.loadState.refresh) {
+                            is LoadStateLoading -> {
+                                Spacer(Modifier.size(40.dp))
+                            }
 
-                    else -> {
-                        LazyColumn(Modifier) {
-                            items(
-                                lazyReviewItems.itemCount
-                            ) { index ->
+                            is LoadStateError -> {
+                                Text("Error")
+                            }
+
+                            else -> {
                                 val review = lazyReviewItems[index]
                                 if (review != null) {
                                     ReviewCard(review)

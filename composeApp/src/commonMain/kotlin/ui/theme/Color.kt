@@ -1,4 +1,4 @@
-package com.example.rally.ui.theme
+package ui.theme
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver

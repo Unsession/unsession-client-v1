@@ -3,10 +3,10 @@ package api.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-open class Teacher (
+open class TeacherDto (
     val id: Int,
     val name: String,
     val email: String?,
     val department: String,
-    val rating: Double?,
+    val rating: Double? = null,
 )

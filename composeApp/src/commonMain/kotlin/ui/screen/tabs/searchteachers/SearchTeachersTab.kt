@@ -12,8 +12,8 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.FadeTransition
 import com.apu.unsession.MR
-import ui.OptTab
-import ui.screen.tabs.inner.SearchTeachersScreen
+import ui.screen.tabs.inner.teacherstab.SearchTeachersScreen
+import ui.uikit.OptTab
 import utils.AppBarScreen
 import utils.ScreenOptions
 

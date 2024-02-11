@@ -1,7 +1,6 @@
 package api.models
 
 import kotlinx.serialization.Serializable
-import settings.SettingsRepo.storeCache
 import settings.SettingsRepo.storeToken
 
 @Serializable
@@ -11,6 +10,6 @@ data class LoginResponse(
 ) {
     fun save() {
         storeToken(token)
-        storeCache(user)
+        user.save()
     }
 }

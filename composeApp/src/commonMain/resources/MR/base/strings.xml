@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="app_title">Unsession</string>
-    <string name="anon_prompt">Make sure there is no personal information in the image that could reveal your identity</string>
+    <string name="anon_prompt">Make sure there is no personal information in the image that could
+        reveal your identity
+    </string>
     <string name="password_too_easy">Password is too easy</string>
     <string name="password_too_short">Password is too short (8 characters)</string>
     <string name="passwords_not_match">Passwords do not match</string>
@@ -10,7 +12,9 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="account_exists">Already have an account?</string>
-    <string name="password_recovery_warning">Attention! If you lose your password, it cannot be restored.</string>
+    <string name="password_recovery_warning">Attention! If you lose your password, it cannot be
+        restored.
+    </string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login_error">Login error</string>
@@ -25,13 +29,11 @@
     <string name="rating_count">Number of ratings</string>
 
     <string name="global_rating">Global rating</string>
-    <string name="labs_rating">Labs</string>
-    <string name="hw_rating">Homework</string>
-    <string name="exam_rating">Exam</string>
-    <string name="kindness_rating">Kindness</string>
-    <string name="responsibility_rating">Responsibility</string>
-    <string name="individual_rating">Individual approach</string>
-    <string name="humour_rating">Humor</string>
+    <string name="difficult_rating">Difficulty</string>
+    <string name="boredom_rating">Stuffiness</string>
+    <string name="toxicity_rating">Toxicity</string>
+    <string name="educational_value_rating">Knowledge gained</string>
+    <string name="personal_rating">Personal qualities</string>
 
     <string name="rating_error">Error fetching rating</string>
     <string name="reviewed_by">Reviewed by</string>
@@ -42,6 +44,15 @@
     <string name="subject">Subject</string>
     <string name="search">Search</string>
     <string name="reviews_on">Reviews on %s</string>
-    <string name="review_on">New review on %s</string>
+    <string name="review_on">New review</string>
+
+    <string name="comment">Comment</string>
+    <string name="send_review">Create comment</string>
+    <string name="admin">Administrator</string>
+    <string name="superuser">👑 Superuser 👑</string>
+    <string name="control_panel">Control panel</string>
+
+    <string name="teacher_email_greetings">Hello, %s!\n</string>
+    <string name="default_not_enough_permissions">Action not permitted</string>
 
 </resources>
