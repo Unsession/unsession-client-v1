@@ -1,10 +1,11 @@
 package api.models
 
 import kotlinx.serialization.Serializable
-import lol.unsession.security.permissions.Access
 import settings.SettingsRepo
+import settings.SettingsRepo.logger
 import settings.SettingsRepo.storeEmail
 import settings.SettingsRepo.storePassword
+import settings.SettingsRepo.storeRefCode
 import settings.SettingsRepo.storeUsername
 import java.time.Clock
 
@@ -19,6 +20,8 @@ class User(
     val created: Int = 0, // stored
     var lastLogin: Int? = null,
     var lastIp: String? = null,
+    val refererCode: String,
+    val refererId: Int?
 ) {
     @Serializable
     data class UserLoginData(
@@ -26,11 +29,13 @@ class User(
         val email: String,
         val password: String,
         val salt: String? = null,
+        val code: String?,
     ) {
         fun save() {
             username?.let { storeUsername(it) }
             storeEmail(email)
             storePassword(password)
+            storeRefCode(code?:"")
         }
         companion object {
             fun get(): UserLoginData {
@@ -38,6 +43,7 @@ class User(
                     username = SettingsRepo.getUsername(),
                     email = SettingsRepo.getEmail()!!,
                     password = SettingsRepo.getPassword()!!,
+                    code = SettingsRepo.getRefCode()
                 )
             }
         }
@@ -53,10 +59,10 @@ class User(
             SettingsRepo.storeBannedReason(bannedReason)
         }
         companion object {
-            fun get(): BanData {
+            fun get(): BanData? {
                 return BanData(
-                    bannedUntil = SettingsRepo.getBannedUntil()?: -1,
-                    bannedReason = SettingsRepo.getBannedReason()?: "",
+                    bannedUntil = SettingsRepo.getBannedUntil()?: return null,
+                    bannedReason = SettingsRepo.getBannedReason()?: return null,
                 )
             }
         }
@@ -69,13 +75,19 @@ class User(
         }
 
     fun save(): Boolean {
+        logger  .info("Saving user: $this")
         userLoginData?.save()?: return false
-        banData?.save()?: return false
+        logger.info("Saving permissions: $permissions")
+        banData?.save()
+        logger.info("Saving ban data: $banData")
         with(SettingsRepo) {
+            storeUsername(name)
             storeRole(roleName)
             storePermissionsArray(permissions.toTypedArray())
             storeCreated(created)
             storeUserId(id)
+            refererId?.let { storeReferrerId(it) }
+            storeRefCode(refererCode)
         }
         return true
     }
@@ -100,6 +112,8 @@ class User(
                 userLoginData = UserLoginData.get(),
                 banData = BanData.get(),
                 created = s.getCreated()?: -1,
+                refererCode = s.getRefCode()!!,
+                refererId = s.getReferrerId()
             )
         }
 

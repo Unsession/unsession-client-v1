@@ -334,8 +334,14 @@ fun TeacherInfoList(teacher: TeacherDto) {
 
 @Composable
 fun Forbidden(error: String = MR.strings.default_not_enough_permissions.getString(LocalContext.current)) {
-    Box(Modifier.size(128.dp).padding(16.dp), contentAlignment = Alignment.Center) {
-        Icon(imageVector = Icons.Default.Block, contentDescription = "forbidden")
-        Text(error, modifier = Modifier.padding(8.dp))
+    Box(Modifier.size(128.dp).padding(16.dp).fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(
+                imageVector = Icons.Default.Block,
+                contentDescription = "forbidden",
+                modifier = Modifier.size(128.dp)
+            )
+            Text(error, modifier = Modifier.padding(8.dp), style = MaterialTheme.typography.bodyLarge)
+        }
     }
 }

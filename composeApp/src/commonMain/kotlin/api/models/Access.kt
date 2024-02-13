@@ -1,4 +1,4 @@
-package lol.unsession.security.permissions
+package api.models
 
 /**
  * ПОРЯДОК ИМЕЕТ ЗНАЧЕНИЕ

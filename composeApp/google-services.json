@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "221566320792",
+    "project_id": "unsession-c59f9",
+    "storage_bucket": "unsession-c59f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221566320792:android:b0528c88f3c4677035d0ed",
+        "android_client_info": {
+          "package_name": "com.apu.unsession"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpQEIasJRaQXVACOJhuBwOAJ32M52dpzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

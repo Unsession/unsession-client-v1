@@ -33,22 +33,22 @@ import utils.localization.Localized.localString
 import utils.localization.Res.getString
 import utils.state.LogInState
 
-object RegistrationScreen : Screen {
+class RegistrationScreen : Screen {
     @Composable
     override fun Content() {
-        val vm = rememberScreenModel { RegistrationScreenViewModel }
+        val vm = rememberScreenModel { RegistrationScreenViewModel() }
         val nav = LocalNavigator.current!!
 
         fun clearError() {
-            RegistrationScreenViewModel.loginErrorMessage.value = ""
+            vm.loginErrorMessage.value = ""
         }
 
-        if (RegistrationScreenViewModel.loginErrorMessage.value != "") {
+        if (vm.loginErrorMessage.value != "") {
             Box {
                 AlertDialog(
                     onDismissRequest = { clearError() },
                     title = { Text(getString(MR.strings.login_error).localString()) },
-                    text = { Text("Error: ${RegistrationScreenViewModel.loginErrorMessage}") },
+                    text = { Text("Error: ${vm.loginErrorMessage}") },
                     confirmButton = {
                         Button(
                             onClick = { clearError() },
@@ -64,60 +64,70 @@ object RegistrationScreen : Screen {
             Modifier.fillMaxSize().padding(horizontal = 32.dp),
             verticalArrangement = Arrangement.Center
         ) {
+//            TextField(
+//                vm.refCode.value,
+//                onValueChange = vm::setRef,
+//                placeholder = { Text(getString(MR.strings.ref_code).localString()) },
+//                singleLine = true,
+//                isError = vm.refCode.value.length != 6,
+//                modifier = Modifier.fillMaxWidth()
+//            )
+//            Spacer(Modifier.height(16.dp))
             TextField(
-                RegistrationScreenViewModel.username.value,
+                vm.username.value,
                 onValueChange = vm::setUsername,
                 placeholder = { Text(getString(MR.strings.username).localString()) },
                 singleLine = true,
-                isError = !RegistrationScreenViewModel.isUsernameValid.value,
+                isError = !vm.isUsernameValid.value,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(16.dp))
             TextField(
-                RegistrationScreenViewModel.email.value,
+                vm.email.value,
                 onValueChange = vm::setEmail,
                 placeholder = { Text(getString(MR.strings.email).localString()) },
                 singleLine = true,
-                isError = !RegistrationScreenViewModel.isEmailValid.value,
+                isError = !vm.isEmailValid.value,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(16.dp))
             TextField(
-                RegistrationScreenViewModel.password.value,
+                vm.password.value,
                 onValueChange = vm::setPassword,
                 placeholder = { Text(getString(MR.strings.password).localString()) },
                 singleLine = true,
-                isError = !RegistrationScreenViewModel.isPasswordValid.value,
+                isError = !vm.isPasswordValid.value,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(16.dp))
             Button(
                 onClick = {
-                    RegistrationScreenViewModel.setLogInState(LogInState.LOG_IN_PROGRESS)
+                    vm.setLogInState(LogInState.LOG_IN_PROGRESS)
                     val loginData = User.UserLoginData(
-                        username = RegistrationScreenViewModel.email.value,
-                        email = RegistrationScreenViewModel.email.value,
-                        password = RegistrationScreenViewModel.password.value
+                        username = vm.username.value,
+                        email = vm.email.value,
+                        password = vm.password.value,
+                        code = "none"
                     )
                     CoroutineScope(Dispatchers.IO).launch {
                         register(loginData,
                             onSuccess = {
                                 nav.push(HomeScreen())
                             }, onFailure = {
-                                RegistrationScreenViewModel.loginErrorMessage.value = it
-                                RegistrationScreenViewModel.setLogInState(LogInState.LOG_IN_FAILED)
+                                vm.loginErrorMessage.value = it
+                                vm.setLogInState(LogInState.LOG_IN_FAILED)
                             }
                         )
                     }
                 },
-                enabled = RegistrationScreenViewModel.isFormValid.value || RegistrationScreenViewModel.loginErrorMessage.value == LogInState.LOG_IN_PROGRESS.name,
+                enabled = vm.isFormValid.value || vm.loginErrorMessage.value == LogInState.LOG_IN_PROGRESS.name,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(getString(MR.strings.register).localString())
             }
             Text(
                 modifier = Modifier.padding(top = 8.dp).clickable {
-                    nav.push(LoginScreen)
+                    nav.push(LoginScreen())
                 },
                 text = getString(MR.strings.login).localString(),
                 color = MaterialTheme.colorScheme.secondary,
@@ -125,6 +135,5 @@ object RegistrationScreen : Screen {
                 textDecoration = TextDecoration.Underline
             )
         }
-
     }
 }

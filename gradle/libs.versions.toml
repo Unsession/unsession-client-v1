@@ -24,6 +24,10 @@ settings = "1.1.1"
 kotlin190 = "1.9.0"
 lifecycle-runtime-ktx = "2.7.0"
 compose-bom = "2024.01.00"
+cashApp = "3.3.0-alpha02-0.4.0"
+markdown = "0.4.1"
+accompanist = "0.31.1-alpha"
+firebaseMessagingKtx = "23.4.1"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -69,6 +73,11 @@ ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
+cash-paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "cashApp" }
+cash-paging-common-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "cashApp" }
+markdown = { group = "com.github.jeziellago", name = "compose-markdown", version.ref = "markdown" }
+accompanist = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 
 
 [plugins]

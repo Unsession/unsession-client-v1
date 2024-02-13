@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     id("dev.icerock.mobile.multiplatform-resources") version "0.23.0"
     kotlin("plugin.serialization") version "1.9.22"
+    id("com.google.gms.google-services")
 }
 kotlin {
     androidTarget {
@@ -53,6 +54,10 @@ kotlin {
             implementation("app.cash.paging:paging-compose-common:3.3.0-alpha02-0.4.0")
             implementation("app.cash.paging:paging-common:3.3.0-alpha02-0.4.0")
             implementation("com.github.jeziellago:compose-markdown:0.4.1")
+            implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:32.7.2"))
+            implementation("com.google.firebase:firebase-analytics")
 
         }
         val androidMain by getting {
@@ -107,8 +112,9 @@ android {
     }
 }
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.firebase.messaging.ktx)
 }
 multiplatformResources {
     multiplatformResourcesPackage = "com.apu.unsession" // required

@@ -5,13 +5,16 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import com.apu.unsession.MR
 import utils.state.LogInState
 
-object RegistrationScreenViewModel : ScreenModel {
+class RegistrationScreenViewModel : ScreenModel {
     var username = mutableStateOf("")
         private set
     var email = mutableStateOf("")
         private set
 
     var password = mutableStateOf("")
+        private set
+
+    var refCode = mutableStateOf("")
         private set
 
     var isPasswordVisible = mutableStateOf(false)
@@ -81,6 +84,9 @@ object RegistrationScreenViewModel : ScreenModel {
 
             else -> isPasswordValid.value = true
         }
+//        if (password.value == "clear") {
+//            SettingsRepo.settingsReset()
+//        }
         return isPasswordValid.value
     }
 
@@ -111,19 +117,23 @@ object RegistrationScreenViewModel : ScreenModel {
         return LogInState.entries[logInState.value]
     }
     fun setEmail(email: String) {
-        RegistrationScreenViewModel.email.value = email
+        this.email.value = email
         isEmailValid.value = true
         //checkEmail()
         checkForm()
     }
     fun setPassword(password: String) {
-        RegistrationScreenViewModel.password.value = password
+        this.password.value = password
         checkPassword()
         checkForm()
     }
 
     fun setUsername(username: String) {
         checkUsername()
-        RegistrationScreenViewModel.username.value = username
+        this.username.value = username
+    }
+
+    fun setRef(code: String) {
+        this.refCode.value = code
     }
 }

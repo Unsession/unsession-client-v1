@@ -13,6 +13,7 @@
     <string name="password_recovery_warning">Внимание! В случае утери пароля, его восстановление невозможно.</string>
     <string name="email">Электропочта</string>
     <string name="password">Пароль</string>
+    <string name="ref_code">Реферальный код</string>
     <string name="login_error">Ошибка входа</string>
     <string name="login_error_message">Неверный email или пароль</string>
     <string name="username">Имя пользователя</string>

@@ -22,7 +22,12 @@ class AuthPlugin {
         override fun install(plugin: AuthPlugin, scope: HttpClient) {
             scope.receivePipeline.intercept(HttpReceivePipeline.After) {
                 println("Intercepting response from ${cachedLoginData()}  ${it.status}")
-                val loginData = cachedLoginData() ?: return@intercept
+                val loginData = cachedLoginData()
+                if (loginData == null) {
+                    println("No login data, proceeding")
+                    proceed()
+                    return@intercept
+                }
                 if (it.status == HttpStatusCode.Unauthorized) {
                     login(loginData, onSuccess = {
                         println("Login successful, repeating request")
@@ -31,7 +36,7 @@ class AuthPlugin {
                             headers[HttpHeaders.Authorization] = "Bearer ${getToken()}"
                         }
                         println(repeatCall.headers.entries())
-                        val response = api.rawClient.request(repeatCall)
+                        val response = rawClient.request(repeatCall)
                         proceedWith(response)
                     }, {
                         println("Login failed, proceeding with error 401")

@@ -19,6 +19,7 @@ import io.ktor.util.InternalAPI
 import lol.unsession.db.models.PAGE_SIZE_DEFAULT
 import org.slf4j.LoggerFactory.getLogger
 import rawHttpClient
+import settings.SettingsRepo.storePassword
 
 val rawClient = rawHttpClient()
 val apiClient = apiHttpClient()
@@ -163,7 +164,10 @@ sealed class Api {
                     return
                 }
                 val data = call.body<LoginResponse>()
+                logger.debug("data")
                 data.save()
+                logger.debug("data password")
+                storePassword(loginData.password)
                 onSuccess()
             } catch (e: Exception) {
                 onFailure(e.message.toString())
@@ -185,10 +189,27 @@ sealed class Api {
                     onFailure(call.bodyAsText())
                     return
                 }
-                call.body<LoginResponse>().save()
+                val data = call.body<LoginResponse>()
+                logger.debug("R data")
+                data.save()
+                logger.debug("R data password")
                 onSuccess()
             } catch (e: Exception) {
                 onFailure(e.message.toString())
+            }
+        }
+
+        suspend fun sendFcmToken(token: String) {
+            try {
+                val call = apiClient.post {
+                    url("$endpoint/fcm")
+                    setBody(token)
+                }
+                if (!call.status.isSuccess()) {
+                    println("Failed to send FCM token: ${call.bodyAsText()}")
+                }
+            } catch (e: Exception) {
+                println("Failed to send FCM token: ${e.message}")
             }
         }
     }

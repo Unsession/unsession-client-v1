@@ -34,7 +34,7 @@ import utils.localization.Localized.localString
 import utils.localization.Res.getString
 import utils.state.LogInState
 
-object LoginScreen : Screen {
+class LoginScreen : Screen {
     @Composable
     override fun Content() {
         val vm = rememberScreenModel { LogInScreenViewModel }
@@ -89,7 +89,8 @@ object LoginScreen : Screen {
                     val loginData = User.UserLoginData(
                         username = SettingsRepo.getUsername(),
                         email = LogInScreenViewModel.email.value,
-                        password = LogInScreenViewModel.password.value
+                        password = LogInScreenViewModel.password.value,
+                        code = SettingsRepo.getRefCode()
                     )
                     CoroutineScope(Dispatchers.IO).launch {
                         login(loginData,
@@ -107,7 +108,7 @@ object LoginScreen : Screen {
                 Text(getString(MR.strings.login).localString())
             }
             Text(modifier = Modifier.padding(top = 8.dp).clickable {
-                nav.push(RegistrationScreen)
+                nav.push(RegistrationScreen())
             }, text = getString(MR.strings.register).localString(), color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Medium, textDecoration = TextDecoration.Underline)
         }
     }

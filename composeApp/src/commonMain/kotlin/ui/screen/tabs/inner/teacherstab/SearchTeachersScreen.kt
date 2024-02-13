@@ -1,6 +1,7 @@
 package ui.screen.tabs.inner.teacherstab
 
 import android.os.Parcel
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,7 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import api.models.Access
 import api.models.TeacherDto
+import api.models.User
 import app.cash.paging.LoadStateError
 import app.cash.paging.LoadStateLoading
 import app.cash.paging.Pager
@@ -38,6 +41,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import ui.theme.appBarElevation
+import ui.uikit.Forbidden
 import ui.uikit.SearchAppBar
 import ui.uikit.TeacherCard
 import utils.OptScreen
@@ -82,11 +86,11 @@ class SearchTeachersScreenViewModel() : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val pager = query.debounce(300).flatMapLatest { uQuery ->
-            Pager(PagingConfig(pageSize = 15)) {
-                TeachersSearchPagingSource(uQuery)
-            }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
+        Pager(PagingConfig(pageSize = 15)) {
+            TeachersSearchPagingSource(uQuery)
+        }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
 
-        }
+    }
 
 }
 
@@ -117,31 +121,37 @@ class SearchTeachersScreen() : OptScreen,
 
             }
         ) {
-            Surface(shadowElevation = appBarElevation, modifier = Modifier.padding(it)) {
-                SearchAppBar(onSearchTextChanged = { q ->
-                    vm.query.value = q
-                }, content = {
-                    Spacer(Modifier.height(8.dp))
-                })
-            }
-            when (lazyReviewItems.loadState.refresh) {
-                is LoadStateLoading -> {
-                    Spacer(Modifier.size(40.dp))
+            Column {
+                Surface(shadowElevation = appBarElevation, modifier = Modifier.padding(it)) {
+                    SearchAppBar(onSearchTextChanged = { q ->
+                        vm.query.value = q
+                    }, content = {
+                        Spacer(Modifier.height(8.dp))
+                    })
                 }
+                when (lazyReviewItems.loadState.refresh) {
+                    is LoadStateLoading -> {
+                        Spacer(Modifier.size(40.dp))
+                    }
 
-                is LoadStateError -> {
-                    Text("Error")
-                }
+                    is LoadStateError -> {
+                        Text("Error")
+                    }
 
-                else -> {
-                    LazyColumn(Modifier.padding(horizontal = 8.dp)) {
-                        items(
-                            lazyReviewItems.itemCount
-                        ) { index ->
-                            val teacher = lazyReviewItems[index]
-                            TeacherCard(teacher!!) {
-                                nav.push(FullReviewScreen(teacher))
+                    else -> {
+                        if (User.hasAccess(Access.Teachers)) {
+                            LazyColumn(Modifier.padding(horizontal = 8.dp)) {
+                                items(
+                                    lazyReviewItems.itemCount
+                                ) { index ->
+                                    val teacher = lazyReviewItems[index]
+                                    TeacherCard(teacher!!) {
+                                        nav.push(FullReviewScreen(teacher))
+                                    }
+                                }
                             }
+                        } else {
+                            Forbidden()
                         }
                     }
                 }

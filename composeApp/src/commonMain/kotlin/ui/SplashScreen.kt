@@ -46,12 +46,12 @@ object SplashScreen : Screen {
                         onSuccess = {
                             nav.push(HomeScreen())
                         }, onFailure = {
-                            nav.push(LoginScreen)
+                            nav.push(LoginScreen())
                         }
                     )
                 }
             } else {
-                nav.push(RegistrationScreen)
+                nav.push(RegistrationScreen())
             }
         }
     }

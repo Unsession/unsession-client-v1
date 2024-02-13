@@ -7,7 +7,7 @@ import ui.screen.loginflow.RegistrationScreen
 import ui.theme.UnsessionTheme
 
 val loginFlowScreens = listOf(
-    LoginScreen, RegistrationScreen
+    LoginScreen(), RegistrationScreen()
 )
 
 @Composable

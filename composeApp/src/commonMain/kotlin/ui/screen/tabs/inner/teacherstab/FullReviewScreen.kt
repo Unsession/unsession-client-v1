@@ -23,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import api.models.Access
 import api.models.Review
 import api.models.TeacherDto
+import api.models.User
 import app.cash.paging.LoadStateError
 import app.cash.paging.LoadStateLoading
 import app.cash.paging.Pager
@@ -112,13 +114,15 @@ class FullReviewScreen(
         val nav = LocalNavigator.current!!
         Scaffold(
             floatingActionButton = {
-                ExtendedFloatingActionButton(
-                    onClick = {
-                        nav.push(AddReviewScreen(teacher))
-                    },
-                    text = { Text(MR.strings.review.getString(LocalContext.current)) },
-                    icon = { Icon(imageVector = (Icons.Default.Add), "add review") }
-                )
+                if (User.hasAccess(Access.TeachersReviewing)) {
+                    ExtendedFloatingActionButton(
+                        onClick = {
+                            nav.push(AddReviewScreen(teacher))
+                        },
+                        text = { Text(MR.strings.review.getString(LocalContext.current)) },
+                        icon = { Icon(imageVector = (Icons.Default.Add), "add review") }
+                    )
+                }
             },
             topBar = {
                 Surface(shadowElevation = appBarElevation) {
