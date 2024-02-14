@@ -13,6 +13,6 @@ data class LoginResponse(
         logger.info("Saving token: $token")
         storeToken(token)
         logger.info("Saving user: $user")
-        user.save()
+        user.save(false)
     }
 }

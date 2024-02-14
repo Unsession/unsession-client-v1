@@ -64,15 +64,6 @@ class RegistrationScreen : Screen {
             Modifier.fillMaxSize().padding(horizontal = 32.dp),
             verticalArrangement = Arrangement.Center
         ) {
-//            TextField(
-//                vm.refCode.value,
-//                onValueChange = vm::setRef,
-//                placeholder = { Text(getString(MR.strings.ref_code).localString()) },
-//                singleLine = true,
-//                isError = vm.refCode.value.length != 6,
-//                modifier = Modifier.fillMaxWidth()
-//            )
-//            Spacer(Modifier.height(16.dp))
             TextField(
                 vm.username.value,
                 onValueChange = vm::setUsername,
@@ -107,7 +98,6 @@ class RegistrationScreen : Screen {
                         username = vm.username.value,
                         email = vm.email.value,
                         password = vm.password.value,
-                        code = "none"
                     )
                     CoroutineScope(Dispatchers.IO).launch {
                         register(loginData,

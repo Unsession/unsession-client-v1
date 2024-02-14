@@ -14,9 +14,6 @@ class RegistrationScreenViewModel : ScreenModel {
     var password = mutableStateOf("")
         private set
 
-    var refCode = mutableStateOf("")
-        private set
-
     var isPasswordVisible = mutableStateOf(false)
         private set
 
@@ -131,9 +128,5 @@ class RegistrationScreenViewModel : ScreenModel {
     fun setUsername(username: String) {
         checkUsername()
         this.username.value = username
-    }
-
-    fun setRef(code: String) {
-        this.refCode.value = code
     }
 }

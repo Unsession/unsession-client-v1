@@ -15,10 +15,7 @@ enum class SettingsKeys {
     USER_ROLE,
     PERMISSIONS,
     CREATED,
-    REF_CODE,
-    CODE,
     BANNED_UNTIL,
-    REFERRER_ID,
     BANNED_REASON;
 }
 
@@ -115,33 +112,7 @@ object SettingsRepo {
         logger.info("${SettingsKeys.BANNED_REASON.name} retrieved $value")
         return value
     }
-    fun storeRefCode(refCode: String) {
-        settings.putString(SettingsKeys.REF_CODE.name, refCode)
-        logger.info("${SettingsKeys.REF_CODE.name} stored $refCode")
-    }
-    fun getRefCode(): String? {
-        val value = settings.getStringOrNull(SettingsKeys.REF_CODE.name)
-        logger.info("${SettingsKeys.REF_CODE.name} retrieved $value")
-        return value
-    }
-    fun storeCode(code: String) {
-        settings.putString(SettingsKeys.CODE.name, code)
-        logger.info("${SettingsKeys.CODE.name} stored $code")
-    }
-    fun getCode(): String? {
-        val value = settings.getStringOrNull(SettingsKeys.CODE.name)
-        logger.info("${SettingsKeys.CODE.name} retrieved $value")
-        return value
-    }
-    fun storeReferrerId(referrerId: Int) {
-        settings.putInt(SettingsKeys.REFERRER_ID.name, referrerId)
-        logger.info("${SettingsKeys.REFERRER_ID.name} stored $referrerId")
-    }
-    fun getReferrerId(): Int? {
-        val value = settings.getIntOrNull(SettingsKeys.REFERRER_ID.name)
-        logger.info("${SettingsKeys.REFERRER_ID.name} retrieved $value")
-        return value
-    }
+
     fun settingsReset() {
         settings.clear()
     }
@@ -152,7 +123,6 @@ object SettingsRepo {
             getEmail() ?: return null,
             getPassword() ?: return null,
             null,
-            getRefCode() ?: return null,
         )
     }
 }

@@ -90,7 +90,6 @@ class LoginScreen : Screen {
                         username = SettingsRepo.getUsername(),
                         email = LogInScreenViewModel.email.value,
                         password = LogInScreenViewModel.password.value,
-                        code = SettingsRepo.getRefCode()
                     )
                     CoroutineScope(Dispatchers.IO).launch {
                         login(loginData,
