@@ -43,7 +43,7 @@ import com.apu.unsession.MR
 import dev.icerock.moko.resources.format
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import lol.unsession.db.models.PAGE_SIZE_DEFAULT
+import lol.unsession.db.models.DEFAULT_PAGE_SIZE
 import ui.theme.appBarElevation
 import ui.uikit.ReviewCard
 import ui.uikit.TeacherInfoList
@@ -78,7 +78,7 @@ class FullReviewPagingSource(private val teacherId: Int) : PagingSource<Int, Rev
 }
 
 class FullReviewScreenViewModel(id: Int = -1) : ViewModel() {
-    val pager = Pager(PagingConfig(pageSize = PAGE_SIZE_DEFAULT)) {
+    val pager = Pager(PagingConfig(pageSize = DEFAULT_PAGE_SIZE)) {
         FullReviewPagingSource(id)
     }.flow.cachedIn(CoroutineScope(Dispatchers.IO))
 }

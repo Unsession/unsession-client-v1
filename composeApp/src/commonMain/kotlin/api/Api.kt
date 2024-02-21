@@ -16,7 +16,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.client.statement.request
 import io.ktor.http.isSuccess
 import io.ktor.util.InternalAPI
-import lol.unsession.db.models.PAGE_SIZE_DEFAULT
+import lol.unsession.db.models.DEFAULT_PAGE_SIZE
 import org.slf4j.LoggerFactory.getLogger
 import rawHttpClient
 
@@ -34,10 +34,10 @@ sealed class Api {
 
         suspend fun getTeachers(
             page: Int,
-            pageSize: Int = PAGE_SIZE_DEFAULT,
+            pageSize: Int = DEFAULT_PAGE_SIZE,
             onSuccess: suspend (List<TeacherDto>) -> Unit = {},
             onFailure: (String) -> Unit = {}
-        ): List<TeacherDto> {
+        ): Result<List<TeacherDto>> {
             try {
                 val call = apiClient.get {
                     url("$endpoint/get")
@@ -46,23 +46,23 @@ sealed class Api {
                 }
                 if (!call.status.isSuccess()) {
                     onFailure(call.bodyAsText())
-                    return listOf()
+                    return Result.failure(IllegalArgumentException(call.bodyAsText()))
                 }
                 val result: List<TeacherDto> = call.body()
                 logger.debug("Got teachers: $result")
                 onSuccess(result)
-                return result
+                return Result.success(result)
             } catch (e: Exception) {
                 onFailure(e.message.toString())
             }
-            return listOf()
+            return Result.failure(IllegalArgumentException("Failed to get teachers"))
         }
 
         @OptIn(InternalAPI::class)
         suspend fun searchTeachers(
             page: Int,
             prompt: String,
-            pageSize: Int = PAGE_SIZE_DEFAULT,
+            pageSize: Int = DEFAULT_PAGE_SIZE,
             onSuccess: suspend (List<TeacherDto>) -> Unit = {},
             onFailure: (String) -> Unit = {}
         ): Result<List<TeacherDto>> {
@@ -96,7 +96,7 @@ sealed class Api {
         suspend fun getByTeacher(
             page: Int,
             teacherId: Int,
-            pageSize: Int = PAGE_SIZE_DEFAULT,
+            pageSize: Int = DEFAULT_PAGE_SIZE,
             onSuccess: suspend (List<Review>) -> Unit = {},
             onFailure: (String) -> Unit = {}
         ): List<Review> {

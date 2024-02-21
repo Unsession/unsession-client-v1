@@ -40,8 +40,13 @@ import utils.SearchViewModel
 class SearchTeachersScreen() : OptScreen,
     Parcelable {
 
-    private val vm = SearchViewModel<TeacherDto>(
-        request = { page, query, pageSize -> Api.Teachers.searchTeachers(page, query, pageSize) },
+    private val vm = SearchViewModel(
+        request = { page, query, pageSize ->
+            if (query.isEmpty())
+                Api.Teachers.getTeachers(page, pageSize)
+            else
+                Api.Teachers.searchTeachers(page, query, pageSize)
+        },
         validator = { it.length >= 3 }
     )
     override val screenOptions: ScreenOptions
