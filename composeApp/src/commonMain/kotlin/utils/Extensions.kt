@@ -19,7 +19,7 @@ fun Long.toDateText(): String {
 }
 
 data class ScreenOptions(
-    val title: String,
+    var title: String,
 )
 
 interface OptScreen : Screen {

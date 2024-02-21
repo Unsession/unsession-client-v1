@@ -179,7 +179,7 @@ class AddReviewScreen(val teacher: TeacherDto) : AppBarScreen, OptScreen {
                         onClick = {
                             sendButtonEnabled = false
                             CoroutineScope(Dispatchers.IO).launch {
-                                api.Api.Reviews.create(
+                                api.ApiClient.Reviews.create(
                                     review = ReviewDto(
                                         teacherId = teacher.id,
                                         globalRating = globalRating,

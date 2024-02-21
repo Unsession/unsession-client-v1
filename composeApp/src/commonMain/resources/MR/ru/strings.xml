@@ -53,6 +53,28 @@
     <string name="teacher_email_greetings">Здравствуйте, %s!\n</string>
     <string name="default_not_enough_permissions">Действие запрещено</string>
 
+    <string name="permissions_control">Управление правами</string>
+    <string name="users_control">Управление пользователями</string>
+    <string name="reviews_control">Управление отзывами</string>
+    <string name="banned_users">Заблокированные пользователи</string>
+    <string name="recent_reviews">Последние отзывы</string>
+    <string name="ban_user">Заблокировать пользователя</string>
+    <string name="unban_user">Разблокировать пользователя</string>
+    <string name="delete_review">Удалить отзыв</string>
+    <string name="delete_user">Удалить пользователя</string>
 
+    <string name="panic_button">Кнопка паники (откл. сервер)</string>
+    <string name="panic_button_warning">Внимание! Нажатие этой кнопки отключит сервер. Восстановление возможно только вручную.</string>
+
+    <string name="user_banned">Пользователь заблокирован</string>
+    <string name="user_unbanned">Пользователь разблокирован</string>
+    <string name="review_deleted">Отзыв удален</string>
+    <string name="user_deleted">Пользователь удален</string>
+    <string name="total_users">Всего пользователей %d</string>
+    <string name="total_reviews">Всего отзывов %d</string>
+    <string name="total_banned_users">Всего заблокированных пользователей %d</string>
+    <string name="total_recent_reviews">Последние отзывы за %s: %d</string>
+
+    <string name="status">Статус: </string>
 
 </resources>

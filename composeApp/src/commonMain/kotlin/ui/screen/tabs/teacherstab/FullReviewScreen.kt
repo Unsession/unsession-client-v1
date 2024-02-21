@@ -55,7 +55,7 @@ class FullReviewPagingSource(private val teacherId: Int) : PagingSource<Int, Rev
         val page = params.key ?: 1
         val pageSize = params.loadSize
         var error = ""
-        val response = api.Api.Reviews.getByTeacher(page, teacherId, pageSize, onFailure = {
+        val response = api.ApiClient.Reviews.getByTeacher(page, teacherId, pageSize, onFailure = {
             error = it
         })
         if (error.isNotEmpty()) {

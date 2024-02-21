@@ -5,7 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.graphics.drawable.Icon
 import android.util.Log
-import api.Api.Users.sendFcmToken
+import api.ApiClient.Users.sendFcmToken
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope

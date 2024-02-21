@@ -56,4 +56,28 @@
     <string name="teacher_email_greetings">Hello, %s!\n</string>
     <string name="default_not_enough_permissions">Action not permitted</string>
 
+<string name="permissions_control">Permissions management</string>
+    <string name="users_control">User management</string>
+    <string name="reviews_control">Manage reviews</string>
+    <string name="banned_users">Banned users</string>
+    <string name="recent_reviews">Recent reviews</string>
+    <string name="ban_user">Block user</string>
+    <string name="unban_user">Unban user</string>
+    <string name="delete_review">Delete review</string>
+    <string name="delete_user">Delete user</string>
+
+    <string name="panic_button">Panic button (server disabled)</string>
+    <string name="panic_button_warning">Attention! Clicking this button will shut down the server. Restoration is only possible manually.</string>
+
+    <string name="user_banned">User banned</string>
+    <string name="user_unbanned">User is unbanned</string>
+    <string name="review_deleted">Review deleted</string>
+    <string name="user_deleted">User deleted</string>
+    <string name="total_users">Total users %d</string>
+    <string name="total_reviews">Total reviews %d</string>
+    <string name="total_banned_users">Total blocked users %d</string>
+    <string name="total_recent_reviews">Last reviews for %s: %d</string>
+
+    <string name="status">Status: </string>
+
 </resources>

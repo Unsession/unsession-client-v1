@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import api.Api
+import api.ApiClient
 import api.models.Access
 import api.models.TeacherDto
 import api.models.User
@@ -43,9 +43,9 @@ class SearchTeachersScreen() : OptScreen,
     private val vm = SearchViewModel(
         request = { page, query, pageSize ->
             if (query.isEmpty())
-                Api.Teachers.getTeachers(page, pageSize)
+                ApiClient.Teachers.getTeachers(page, pageSize)
             else
-                Api.Teachers.searchTeachers(page, query, pageSize)
+                ApiClient.Teachers.searchTeachers(page, query, pageSize)
         },
         validator = { it.length >= 3 }
     )

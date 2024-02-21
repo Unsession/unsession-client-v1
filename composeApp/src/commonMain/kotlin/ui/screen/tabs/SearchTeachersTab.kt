@@ -35,7 +35,7 @@ class SearchTeachersTab : AppTab {
     override fun Content() {
         val currentScreen = remember { mutableStateOf<AppBarScreen?>(null) }
         Box {
-            Navigator(SearchTeachersScreen(), onBackPressed = { true }) {
+            Navigator(SearchTeachersScreen()) {
                 currentScreen.value = (it.lastItem as? AppBarScreen)
                 FadeTransition(it)
             }

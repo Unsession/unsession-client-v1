@@ -18,7 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import api.Api
+import api.ApiClient
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.apu.unsession.MR
@@ -41,7 +41,7 @@ object SplashScreen : Screen {
             }
             if (SettingsRepo.cachedLoginData() != null) {
                 runBlocking {
-                    Api.Users.login(
+                    ApiClient.Users.login(
                         SettingsRepo.cachedLoginData()!!,
                         onSuccess = {
                             nav.push(HomeScreen())

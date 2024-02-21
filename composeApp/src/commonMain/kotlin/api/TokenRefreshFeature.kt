@@ -1,6 +1,6 @@
 package api
 
-import api.Api.Users.login
+import api.ApiClient.Users.login
 import getToken
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpClientPlugin
