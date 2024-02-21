@@ -65,7 +65,7 @@ sealed class Api {
             pageSize: Int = PAGE_SIZE_DEFAULT,
             onSuccess: suspend (List<TeacherDto>) -> Unit = {},
             onFailure: (String) -> Unit = {}
-        ): List<TeacherDto> {
+        ): Result<List<TeacherDto>> {
             try {
                 val call = apiClient.get {
                     url("$endpoint/search")
@@ -77,15 +77,15 @@ sealed class Api {
                 println("$endpoint/search: ${call.request.headers.entries()}; ${call.status}")
                 if (!call.status.isSuccess()) {
                     onFailure(call.bodyAsText())
-                    return listOf()
+                    return Result.failure(IllegalArgumentException(call.bodyAsText()))
                 }
                 val result: List<TeacherDto> = call.body()
                 onSuccess(result)
-                return result
+                return Result.success(result)
             } catch (e: Exception) {
                 onFailure(e.message.toString())
             }
-            return listOf()
+            return Result.failure(IllegalArgumentException("Failed to get teachers"))
         }
     }
 

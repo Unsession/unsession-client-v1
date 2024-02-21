@@ -14,6 +14,7 @@ import app.cash.paging.PagingSourceLoadResultPage
 import app.cash.paging.PagingState
 import app.cash.paging.cachedIn
 import cafe.adriel.voyager.core.screen.Screen
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -106,12 +107,12 @@ open class SearchPagingSource<T : Any>(
 
 }
 
-class SearchViewModel<T : Any>(
+open class SearchViewModel<T : Any>(
     request: suspend (page: Int, query: String, pageSize: Int) -> Result<List<T>>,
     debounceTime: Long = 300,
     pageSize: Int = PAGE_SIZE_DEFAULT,
-    validator: (String) -> Boolean,
-) {
+    validator: (String) -> Boolean = { true },
+) : ViewModel() {
     var searchQuery = MutableStateFlow("")
 
     val source: SearchPagingSource<T> = SearchPagingSource(
