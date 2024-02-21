@@ -54,7 +54,7 @@ import utils.setText
 import utils.toDateText
 import kotlin.math.floor
 
-public interface OptTab : OptScreen, Tab
+public interface AppTab : OptScreen, Tab
 
 @Composable
 fun ClickableCard(

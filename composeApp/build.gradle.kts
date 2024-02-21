@@ -23,7 +23,7 @@ kotlin {
     //jvm("desktop")
     sourceSets {
         commonMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+            implementation(libs.kotlinx.coroutines.core)
 //            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -51,14 +51,19 @@ kotlin {
             implementation(libs.settings)
             implementation(libs.ktor.client.auth)
 
-            implementation("app.cash.paging:paging-compose-common:3.3.0-alpha02-0.4.0")
-            implementation("app.cash.paging:paging-common:3.3.0-alpha02-0.4.0")
-            implementation("com.github.jeziellago:compose-markdown:0.4.1")
-            implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+            implementation(libs.cash.paging.common.compose)
+            implementation(libs.cash.paging.common)
+            implementation(libs.markdown)
+            implementation(libs.accompanist.permissions.v0340)
 
             implementation(project.dependencies.platform("com.google.firebase:firebase-bom:32.7.2"))
+            //noinspection UseTomlInstead
             implementation("com.google.firebase:firebase-analytics")
+            implementation(libs.biometry.compose)
 
+            implementation(libs.mvvm.compose) // api mvvm-core, getViewModel for Compose Multiplatform
+            implementation(libs.mvvm.flow.compose) // api mvvm-flow, binding extensions for Compose Multiplatform
+            implementation(libs.mvvm.livedata.compose) // api mvvm-livedata, binding extensions for Compose Multiplatform
         }
         val androidMain by getting {
             dependsOn(commonMain.get())

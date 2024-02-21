@@ -1,6 +1,5 @@
 package ui.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -21,11 +20,12 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import ui.FabTab
-import ui.screen.tabs.searchteachers.SearchTeachersTab
+import ui.screen.tabs.AdminTab
+import ui.screen.tabs.SearchTeachersTab
 import ui.theme.appBarElevation
 
 class HomeScreen : Screen {
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
     @Composable
     override fun Content() {
         TabNavigator(SearchTeachersTab()) { nav ->
@@ -48,6 +48,7 @@ class HomeScreen : Screen {
                             modifier = Modifier.background(MaterialTheme.colorScheme.primary)
                         ) {
                             TabNavigationItem(SearchTeachersTab())
+                            TabNavigationItem(AdminTab())
                         }
                     }
                 }

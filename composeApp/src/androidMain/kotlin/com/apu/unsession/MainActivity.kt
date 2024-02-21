@@ -4,12 +4,12 @@ import App
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     private val TAG: String = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ class RegistrationScreen : Screen {
     override fun Content() {
         val vm = rememberScreenModel { RegistrationScreenViewModel() }
         val nav = LocalNavigator.current!!
+        val context = LocalContext.current
 
         fun clearError() {
             vm.loginErrorMessage.value = ""
