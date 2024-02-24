@@ -49,7 +49,7 @@ class LoginScreen : Screen {
                 AlertDialog(
                     onDismissRequest = { },
                     title = { Text(getString(MR.strings.login_error).localString()) },
-                    text = { Text("Error: ${LogInScreenViewModel.loginErrorMessage}") },
+                    text = { Text("Error: ${LogInScreenViewModel.loginErrorMessage.value}") },
                     confirmButton = {
                         Button(
                             onClick = { clearError() },

@@ -50,7 +50,7 @@ class RegistrationScreen : Screen {
                 AlertDialog(
                     onDismissRequest = { clearError() },
                     title = { Text(getString(MR.strings.login_error).localString()) },
-                    text = { Text("Error: ${vm.loginErrorMessage}") },
+                    text = { Text("Error: ${vm.loginErrorMessage.value}") },
                     confirmButton = {
                         Button(
                             onClick = { clearError() },
