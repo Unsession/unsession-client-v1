@@ -28,3 +28,26 @@ val LightColorScheme = lightColorScheme(
     onBackground = Color.Black,
     onSurface = Color.Black,
 )
+
+val DevDarkColorScheme = darkColorScheme(
+    primary = Green500,
+    onPrimary = Color.White,
+    surface = DarkBlue900,
+    onSurface = Color.White,
+    background = Color.Black,
+    onBackground = Color.White,
+    error = Red600,
+    onError = Color.White,
+)
+
+val DevLightColorScheme = lightColorScheme(
+    primary = Green500,
+    onPrimary = Color.White,
+    primaryContainer = Purple700,
+    secondary = Blue100,
+    background = Color.White,
+    surface = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+)

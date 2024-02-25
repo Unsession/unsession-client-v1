@@ -72,3 +72,33 @@ open class SearchViewModel<T : Any>(
         ).flow.cachedIn(CoroutineScope(Dispatchers.IO))
     }
 }
+
+open class PagerViewModel<T: Any>(
+    request: suspend (page: Int, pageSize: Int) -> Result<List<T>>,
+    pageSize: Int = DEFAULT_PAGE_SIZE,
+) : ViewModel() {
+    val pager = Pager(
+        config = PagingConfig(pageSize = pageSize),
+        pagingSourceFactory = { object : PagingSource<Int, T>() {
+            override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
+                val page = params.key ?: 1
+                val response = request(page, pageSize)
+                if (response.isFailure) {
+                    return LoadResult.Error(response.exceptionOrNull()!!)
+                }
+                return LoadResult.Page(
+                    data = response.getOrNull() ?: emptyList(),
+                    prevKey = if (page == 1) null else page - 1,
+                    nextKey = if (response.getOrNull()?.isEmpty() == true) null else page + 1
+                )
+            }
+
+            override fun getRefreshKey(state: PagingState<Int, T>): Int? {
+                return state.anchorPosition?.let { anchorPosition ->
+                    state.closestPageToPosition(anchorPosition)?.prevKey?.plus(DEFAULT_PAGE_SIZE)
+                        ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(DEFAULT_PAGE_SIZE)
+                }
+            }
+        } }
+    ).flow.cachedIn(CoroutineScope(Dispatchers.IO))
+}

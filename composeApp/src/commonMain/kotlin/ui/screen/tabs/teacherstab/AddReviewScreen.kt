@@ -49,7 +49,7 @@ import utils.AppBarScreen
 import utils.OptScreen
 import utils.ScreenOptions
 
-class AddReviewScreen(val teacher: TeacherDto) : AppBarScreen, OptScreen {
+class AddReviewScreen(val teacher: TeacherDto) : AppBarScreen(), OptScreen {
     override val screenOptions: ScreenOptions
         @Composable get() = ScreenOptions(
             title = MR.strings.review_on.format(teacher.name).toString(LocalContext.current)

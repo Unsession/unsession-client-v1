@@ -85,7 +85,7 @@ class FullReviewScreenViewModel(id: Int = -1) : ViewModel() {
 
 class FullReviewScreen(
     private val teacher: TeacherDto
-) : AppBarScreen {
+) : AppBarScreen() {
     private val vm = FullReviewScreenViewModel(teacher.id)
     override val screenOptions: ScreenOptions
         @Composable get() = ScreenOptions(

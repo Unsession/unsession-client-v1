@@ -14,14 +14,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import api.models.adminAccess
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import ui.FabTab
-import ui.screen.tabs.AdminTab
+import ui.permissions.WithAnyPermission
 import ui.screen.tabs.SearchTeachersTab
+import ui.screen.tabs.admintab.AdminTab
 import ui.theme.appBarElevation
 
 class HomeScreen : Screen {
@@ -48,7 +50,12 @@ class HomeScreen : Screen {
                             modifier = Modifier.background(MaterialTheme.colorScheme.primary)
                         ) {
                             TabNavigationItem(SearchTeachersTab())
-                            TabNavigationItem(AdminTab())
+                            WithAnyPermission(
+                                content = {
+                                    TabNavigationItem(AdminTab())
+                                },
+                                permissions = adminAccess,
+                            )
                         }
                     }
                 }

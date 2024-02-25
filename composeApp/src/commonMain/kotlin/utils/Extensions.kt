@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import cafe.adriel.voyager.core.screen.Screen
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -26,8 +27,8 @@ interface OptScreen : Screen {
     val screenOptions: ScreenOptions @Composable get
 }
 
-interface AppBarScreen : Screen, OptScreen {
-    val AppBar: @Composable () -> Unit
+abstract class AppBarScreen : Screen, OptScreen {
+    abstract val AppBar: @Composable () -> Unit
         @Composable get
 }
 
@@ -54,4 +55,10 @@ fun sendEmail(ctx: Context, email: Email) {
         type = "message/rfc822"
     }
     ctx.startActivity(Intent.createChooser(i, "Choose an Email client : "))
+}
+
+fun dateInFutureValidator(datetime: Long): Boolean {
+    // input: timestamp, output: true if datetime is in future
+    val now = Instant.now().epochSecond
+    return datetime > now
 }

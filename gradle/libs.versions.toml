@@ -13,7 +13,7 @@ androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
 biometric = "1.2.0-alpha05"
 biometryCompose = "0.4.0"
-compose = "1.6.0"
+compose = "1.6.1"
 compose-compiler = "1.5.8"
 compose-plugin = "1.6.0-alpha01"
 coreSplashscreen = "1.1.0-alpha02"
@@ -25,15 +25,14 @@ mvvmLivedataCompose = "0.16.1"
 mvvmFlowCompose = "0.16.1"
 mvvmCompose = "0.16.1"
 voyager = "1.0.0"
-uiToolingPreviewAndroid = "1.6.0"
 mokoRecources = "0.23.0"
 settings = "1.1.1"
 kotlin190 = "1.9.0"
 lifecycle-runtime-ktx = "2.7.0"
-compose-bom = "2024.01.00"
+compose-bom = "2024.02.00"
 cashApp = "3.3.0-alpha02-0.4.0"
 markdown = "0.4.1"
-accompanist = "0.31.1-alpha"
+accompanist = "0.34.0"
 firebaseMessagingKtx = "23.4.1"
 
 [libraries]
@@ -77,7 +76,7 @@ voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voy
 voyager-hilt = { module = "cafe.adriel.voyager:voyager-hilt", version.ref = "voyager" }
 voyager-kodein = { module = "cafe.adriel.voyager:voyager-kodein", version.ref = "voyager" }
 voyager-rxjava = { module = "cafe.adriel.voyager:voyager-rxjava", version.ref = "voyager" }
-androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
+androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "compose" }
 moko-resources = { module = "dev.icerock.moko:resources", version.ref = "mokoRecources" }
 moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "mokoRecources" }
 settings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "settings" }

@@ -97,3 +97,95 @@ val Typography = Typography(
         letterSpacing = 0.2.sp
     )
 )
+
+val TypographyUbuntu = Typography(
+    displayLarge = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontSize = 96.sp,
+        fontFamily = Ubuntu
+    ),
+    displayMedium = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontSize = 60.sp,
+        letterSpacing = 1.5.sp,
+        fontFamily = Ubuntu
+    ),
+    displaySmall = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 44.sp,
+        fontFamily = Ubuntu
+    ),
+    headlineLarge = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 34.sp,
+        fontFamily = Ubuntu
+    ),
+    headlineMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
+        letterSpacing = 0.2.sp,
+        fontFamily = Ubuntu
+    ),
+    headlineSmall = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        letterSpacing = 1.sp,
+        fontFamily = Ubuntu
+    ),
+    titleLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+        letterSpacing = 1.sp,
+        fontFamily = Ubuntu
+    ),
+    titleMedium = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        fontFamily = Ubuntu
+    ),
+    titleSmall = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        fontFamily = Ubuntu
+    ),
+    bodyLarge = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        letterSpacing = 0.1.sp,
+        fontFamily = Ubuntu
+    ),
+    bodyMedium = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        letterSpacing = 0.1.sp,
+        fontFamily = Ubuntu
+    ),
+    bodySmall = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontSize = 14.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.1.sp,
+        fontFamily = Ubuntu
+    ),
+    labelLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.2.sp,
+        fontFamily = Ubuntu
+    ),
+    labelMedium = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.2.sp,
+        fontFamily = Ubuntu
+    ),
+    labelSmall = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.2.sp,
+        fontFamily = Ubuntu
+    )
+)

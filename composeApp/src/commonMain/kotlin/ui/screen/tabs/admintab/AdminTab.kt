@@ -1,4 +1,4 @@
-package ui.screen.tabs
+package ui.screen.tabs.admintab
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -22,13 +22,15 @@ import cafe.adriel.voyager.transitions.FadeTransition
 import dev.icerock.moko.biometry.BiometryAuthenticator
 import dev.icerock.moko.biometry.compose.BindBiometryAuthenticatorEffect
 import dev.icerock.moko.mvvm.dispatcher.EventsDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
 import ui.permissions.BiometryViewModel
-import ui.screen.tabs.admintab.AdminScreen
+import ui.theme.UnsessionThemeDev
 import ui.uikit.AppTab
 import utils.AppBarScreen
 import utils.ScreenOptions
 
 class AdminTab : AppTab {
+    val appBarTitle = MutableStateFlow("Admin")
     override val screenOptions: ScreenOptions
         @Composable get() = ScreenOptions(
             title = "Admin",
@@ -59,7 +61,9 @@ class AdminTab : AppTab {
                 success = true
             }
         } else {
-            AdminUI()
+            UnsessionThemeDev {
+                AdminUI()
+            }
         }
     }
 
@@ -72,7 +76,7 @@ class AdminTab : AppTab {
             }
         ) { paddingValues ->
             Box(Modifier.padding(paddingValues)) {
-                Navigator(AdminScreen()) { nav ->
+                Navigator(AdminScreenHost(appBarTitleFlow = appBarTitle)) { nav ->
                     currentScreen.value = (nav.lastItem as? AppBarScreen)
                     FadeTransition(nav)
                 }

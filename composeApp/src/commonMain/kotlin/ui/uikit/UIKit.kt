@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,9 +21,10 @@ import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarHalf
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,6 +48,7 @@ import api.models.TeacherDto
 import cafe.adriel.voyager.navigator.tab.Tab
 import com.apu.unsession.MR
 import dev.icerock.moko.resources.format
+import ui.theme.defaultPadding
 import utils.Email
 import utils.OptScreen
 import utils.clipboard
@@ -62,7 +65,7 @@ fun ClickableCard(
     content: @Composable () -> Unit,
     onClick: () -> Unit
 ) {
-    Card(Modifier.padding(vertical = 8.dp).fillMaxWidth()) {
+    ElevatedCard(Modifier.padding(vertical = 8.dp).fillMaxWidth(), elevation = elevation) {
         Box(Modifier.fillMaxSize().clickable { onClick() }) {
             Column(Modifier.padding(8.dp)) {
                 content()
@@ -72,15 +75,34 @@ fun ClickableCard(
 }
 
 @Composable
-fun ThinClickableCard(
+fun SmallClickableCard(
     modifier: Modifier = Modifier,
     elevation: CardElevation = CardDefaults.cardElevation(4.dp, 8.dp, 4.dp, 8.dp),
     content: @Composable () -> Unit,
     onClick: () -> Unit
 ) {
-    Card(Modifier.padding(2.dp).fillMaxWidth()) {
+    ElevatedCard(Modifier.padding(2.dp).fillMaxWidth(), elevation = elevation) {
         Box(Modifier.fillMaxSize().clickable { onClick() }) {
             Column(Modifier.padding(2.dp)) {
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+fun SelectableClickableCard(
+    elevation: CardElevation = CardDefaults.cardElevation(4.dp, 8.dp, 4.dp, 8.dp),
+    content: @Composable () -> Unit,
+    onClick: () -> Unit,
+) {
+    //var select by remember { mutableStateOf(false) }
+//    val cardColors = if (select) elevatedCardColors(
+//        containerColor = MaterialTheme.colorScheme.primary
+//    ) else elevatedCardColors()
+    ElevatedCard(Modifier.padding(vertical = 8.dp).fillMaxWidth(), elevation = elevation, /*colors = cardColors*/) {
+        Box(Modifier.fillMaxSize().clickable { onClick()/*select = !select*/ }) {
+            Column(Modifier.padding(8.dp)) {
                 content()
             }
         }
@@ -268,7 +290,7 @@ fun RatingStars(title: String, onStarsValueChanged: (Int) -> Unit = {}) {
 
 @Composable
 fun TeacherInfo(icon: ImageVector, iconTint: Color, contentText: String, onClick: () -> Unit) {
-    ThinClickableCard(
+    SmallClickableCard(
         Modifier.padding(vertical = 4.dp).fillMaxWidth(),
         elevation = CardDefaults.cardElevation(4.dp, 8.dp, 4.dp, 8.dp),
         onClick = onClick,
@@ -343,5 +365,14 @@ fun Forbidden(error: String = MR.strings.default_not_enough_permissions.getStrin
             )
             Text(error, modifier = Modifier.padding(8.dp), style = MaterialTheme.typography.bodyLarge)
         }
+    }
+}
+
+@Composable
+fun Section(title: String, content: @Composable () -> Unit) {
+    Column(Modifier.padding(defaultPadding)) {
+        Text(title, style = MaterialTheme.typography.labelLarge)
+        Spacer(modifier = Modifier.height(8.dp))
+        content()
     }
 }

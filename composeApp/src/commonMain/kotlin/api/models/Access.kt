@@ -27,3 +27,6 @@ enum class Access {
 
     SS, // superuser
 }
+
+val adminAccess = arrayOf(Access.SS, Access.BigRedButton, Access.Users, Access.UsersAdding, Access.UsersBlocking, Access.UsersRemoving, Access.UsersRolesChanging)
+val usersAccess = arrayOf(Access.Users, Access.UsersAdding, Access.UsersRemoving, Access.UsersBlocking, Access.UsersRolesChanging, Access.UsersProfileInfoEditing)
